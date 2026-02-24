@@ -1,3 +1,4 @@
+import React from "react";
 import { Play, Pause, Settings, MoreHorizontal, Users, Calendar } from "lucide-react";
 import CampaignStatusBadge from "./CampaignStatusBadge";
 import CampaignMetricsBar  from "./CampaignMetricsBar";

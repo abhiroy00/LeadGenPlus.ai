@@ -1,3 +1,4 @@
+import React from "react";
 function Metric({ label, value, color }) {
   return (
     <div className="text-center">

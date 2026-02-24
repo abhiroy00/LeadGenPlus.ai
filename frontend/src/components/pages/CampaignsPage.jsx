@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, Search, X, ArrowLeft, Save, Play } from "lucide-react";
 import CampaignCard        from "../campaigns/CampaignCard";
 import FlowCanvas          from "../campaigns/FlowCanvas";
+import React from "react";
 
 // ── Mock campaigns ──────────────────────────────────────────
 const MOCK_CAMPAIGNS = [

@@ -1,9 +1,10 @@
+import React from "react";
 import { useState, useRef, useCallback } from "react";
 import { Plus, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
 import {
   TriggerNode, MessageNode, DelayNode, ConditionNode, GoalNode,
   NODE_TYPES
-} from "./nodes/Nodes";
+} from "./Nodes";
 
 // ── Default flow for a new campaign ────────────────────────
 const DEFAULT_NODES = [

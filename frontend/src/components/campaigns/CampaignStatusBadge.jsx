@@ -1,3 +1,4 @@
+import React from "react";
 const STATUS = {
   Active:    { bg: "bg-emerald-50", text: "text-emerald-700", dot: "bg-emerald-400", pulse: true  },
   Paused:    { bg: "bg-amber-50",   text: "text-amber-700",   dot: "bg-amber-400",   pulse: false },
