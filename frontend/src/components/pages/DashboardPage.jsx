@@ -1,5 +1,5 @@
 import React from "react";
-import { Users, MessageCircle, TrendingUp, Target, ChevronRight, Bell, Search } from "lucide-react";
+import { Users, MessageCircle, TrendingUp, Target, ChevronRight } from "lucide-react";
 
 // ── Component Imports ───────────────────────────────────────
 import StatCard          from "../dashboard/StatCard";
@@ -9,25 +9,22 @@ import WelcomeBanner     from "../dashboard/WelcomeBanner";
 
 // ── Mini Bar Chart (local to Dashboard) ────────────────────
 function MiniBarChart() {
-  const data = [40, 65, 48, 72, 55, 80, 63, 88, 70, 95, 78, 100];
-  const days = ["M", "T", "W", "T", "F", "S", "S", "M", "T", "W", "T", "F"];
+  const data = [60, 80, 55, 90, 70, 85, 95, 75, 88, 60, 100, 82, 78, 91];
   return (
-    <div className="flex items-end gap-1 h-16">
+    <div className="flex items-end gap-1 h-[120px] p-2">
       {data.map((h, i) => (
         <div key={i} className="flex flex-col items-center gap-1 flex-1">
           <div
-            className="w-full rounded-t-sm transition-all duration-500"
+            className="w-full rounded-t transition-all duration-500"
             style={{
               height: `${h}%`,
               background:
-                i === data.length - 1
-                  ? "linear-gradient(to top, #2563eb, #60a5fa)"
-                  : i >= data.length - 3
-                  ? "linear-gradient(to top, #3b82f6, #93c5fd)"
-                  : "#e2e8f0",
+                i < 4 ? "#2563eb" :
+                i < 8 ? "#25d366" :
+                i < 11 ? "#10b981" :
+                "#f59e0b",
             }}
           />
-          <span className="text-[9px] text-slate-400">{days[i]}</span>
         </div>
       ))}
     </div>
@@ -37,15 +34,15 @@ function MiniBarChart() {
 // ── Agent Card (local to Dashboard) ────────────────────────
 function AgentCard({ emoji, name, stat, status }) {
   return (
-    <div className="flex items-center gap-3 bg-slate-50 rounded-xl p-3 hover:bg-slate-100 transition-colors">
+    <div className="flex items-center gap-3 bg-w-surface2 rounded-lg p-3 hover:bg-gray-100 transition-colors">
       <div className="text-xl">{emoji}</div>
       <div className="flex-1 min-w-0">
-        <p className="text-xs font-semibold text-slate-700 truncate">{name}</p>
-        <p className="text-xs text-slate-400 truncate">{stat}</p>
+        <p className="text-xs font-semibold text-w-text truncate">{name}</p>
+        <p className="text-xs text-w-text-dim truncate">{stat}</p>
       </div>
       <div
         className={`w-2 h-2 rounded-full shrink-0 ${
-          status === "active" ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+          status === "active" ? "bg-w-accent2 animate-pulse" : "bg-w-accent3"
         }`}
       />
     </div>
@@ -55,57 +52,39 @@ function AgentCard({ emoji, name, stat, status }) {
 // ── Dashboard Page ──────────────────────────────────────────
 export default function DashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
-
-      {/* ── Top Nav ── */}
-      <header className="sticky top-0 z-20 bg-white border-b border-gray-100 px-4 sm:px-6 py-3 flex items-center gap-3">
-        <div className="flex-1 relative max-w-sm">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            placeholder="Search leads, campaigns..."
-            className="w-full pl-8 pr-3 py-2 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-        <div className="flex items-center gap-2 ml-auto">
-          <button className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors">
-            <Bell size={18} className="text-slate-600" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
-          </button>
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white text-xs font-bold">
-            AK
-          </div>
-        </div>
-      </header>
-
-      <div className="px-4 sm:px-6 py-6 max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-w-bg font-sans">
+      <div className="px-6 py-6 max-w-7xl mx-auto space-y-5">
 
         {/* ── Welcome Banner ── */}
         <WelcomeBanner />
 
         {/* ── Stat Cards ── */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          <StatCard icon={Users}         label="Total Leads"    value="12,840" change="18%"  positive={true}  color="text-blue-600"    bg="bg-blue-50"    />
-          <StatCard icon={MessageCircle} label="Messages Sent"  value="142.8K" change="24%"  positive={true}  color="text-emerald-600" bg="bg-emerald-50" />
-          <StatCard icon={TrendingUp}    label="Reply Rate"     value="4.8%"   change="0.6%" positive={true}  color="text-violet-600"  bg="bg-violet-50"  />
-          <StatCard icon={Target}        label="Demos Booked"   value="324"    change="3%"   positive={false} color="text-amber-600"   bg="bg-amber-50"   />
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+          <StatCard icon={Users}         label="Leads Today"    value="8,420"  change="↑ +12% vs yesterday" color="text-w-accent"    />
+          <StatCard icon={MessageCircle} label="WA Open Rate"   value="84%"    change="↑ Industry avg 35%" color="text-whatsapp"    />
+          <StatCard icon={TrendingUp}    label="Replies Today"  value="342"    change="↑ +8% this week"     color="text-w-accent2"  />
+          <StatCard icon={Target}        label="Hot Leads 🔥"   value="47"     change="↑ Needs follow-up"   color="text-w-accent3"  />
+          <StatCard icon={Target}        label="Pipeline Value" value="₹2.4L"  change="↑ This month"        color="text-w-accent4"  />
         </div>
 
         {/* ── Charts Row ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
           {/* Lead Volume Chart */}
-          <div className="lg:col-span-2 bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-1">
+          <div className="lg:col-span-2 bg-w-surface rounded-lg p-4 border border-w-border">
+            <div className="flex items-center justify-between mb-3">
               <div>
-                <h2 className="text-sm font-bold text-slate-800">Lead Volume</h2>
-                <p className="text-xs text-slate-400">Last 12 days</p>
+                <h2 className="text-sm font-semibold text-w-text">Campaign Performance (7 Days)</h2>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-green-50 text-w-accent2 border border-green-200 mt-1">
+                  Live
+                </span>
               </div>
               <div className="flex gap-1">
                 {["7D", "14D", "30D"].map((t, i) => (
                   <button
                     key={t}
-                    className={`text-xs px-3 py-1 rounded-lg font-medium transition-colors ${
-                      i === 0 ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-gray-100"
+                    className={`text-[10px] px-2 py-1 rounded font-medium transition-colors ${
+                      i === 0 ? "bg-w-accent text-white" : "text-w-text-dim hover:bg-w-surface2"
                     }`}
                   >
                     {t}
@@ -113,55 +92,51 @@ export default function DashboardPage() {
                 ))}
               </div>
             </div>
-            <div className="mt-4 mb-2">
+            <div className="bg-w-surface2 border border-w-border rounded-lg mb-3">
               <MiniBarChart />
             </div>
-            <div className="grid grid-cols-3 gap-3 mt-4 pt-4 border-t border-gray-50">
+            <div className="flex gap-4 text-[10px] text-w-text-mid">
+              <span><span className="inline-block w-2 h-2 bg-w-accent rounded-sm mr-1"></span>Email Sent</span>
+              <span><span className="inline-block w-2 h-2 bg-whatsapp rounded-sm mr-1"></span>WA Sent</span>
+              <span><span className="inline-block w-2 h-2 bg-w-accent2 rounded-sm mr-1"></span>Replies</span>
+              <span><span className="inline-block w-2 h-2 bg-w-accent3 rounded-sm mr-1"></span>Converted</span>
+            </div>
+          </div>
+
+          {/* Lead Sources Donut */}
+          <div className="bg-w-surface rounded-lg p-4 border border-w-border">
+            <h2 className="text-sm font-semibold text-w-text mb-3">Lead Sources</h2>
+            <div className="w-[100px] h-[100px] rounded-full mx-auto mb-3" 
+                 style={{
+                   background: `conic-gradient(
+                     #2563eb 0% 40%,
+                     #10b981 40% 65%,
+                     #f59e0b 65% 80%,
+                     #e5e7eb 80% 100%
+                   )`
+                 }}>
+              <div className="w-[60px] h-[60px] bg-w-surface rounded-full m-5 flex items-center justify-center">
+                <span className="text-sm font-bold text-w-text">100%</span>
+              </div>
+            </div>
+            <div className="space-y-1">
               {[
-                { label: "Avg/Day",    value: "1,070", color: "text-blue-600"   },
-                { label: "Best Day",   value: "1,420", color: "text-emerald-600" },
-                { label: "Conversion", value: "0.34%", color: "text-violet-600"  },
+                { label: "LinkedIn (40%)", color: "#2563eb" },
+                { label: "Google Maps (25%)", color: "#10b981" },
+                { label: "CSV Import (15%)", color: "#f59e0b" },
+                { label: "Other (20%)", color: "#e5e7eb" },
               ].map((m) => (
-                <div key={m.label} className="text-center">
-                  <p className={`text-base font-bold ${m.color}`}>{m.value}</p>
-                  <p className="text-xs text-slate-400">{m.label}</p>
+                <div key={m.label} className="flex items-center gap-1.5 text-[10px] text-w-text-mid">
+                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: m.color }}></div>
+                  <span>{m.label}</span>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Conversion Funnel */}
-          <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-sm font-bold text-slate-800">Conversion Funnel</h2>
-              <ChevronRight size={16} className="text-slate-400" />
-            </div>
-            {[
-              { label: "Contacted",   value: "142.8K", pct: 100, color: "#2563eb" },
-              { label: "Opened",      value: "120K",   pct: 84,  color: "#3b82f6" },
-              { label: "Replied",     value: "6,840",  pct: 48,  color: "#10b981" },
-              { label: "Interested",  value: "1,200",  pct: 28,  color: "#f59e0b" },
-              { label: "Demo Booked", value: "324",    pct: 12,  color: "#8b5cf6" },
-              { label: "Converted",   value: "48",     pct: 6,   color: "#ef4444" },
-            ].map((step) => (
-              <div key={step.label} className="mb-2.5">
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="text-slate-600 font-medium">{step.label}</span>
-                  <span className="text-slate-500">{step.value}</span>
-                </div>
-                <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${step.pct}%`, background: step.color }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* ── Bottom Row ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
 
           {/* Campaigns List — spans 2 cols */}
           <div className="lg:col-span-2">
@@ -169,14 +144,14 @@ export default function DashboardPage() {
           </div>
 
           {/* Activity Feed + AI Agents */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <ActivityFeed />
 
             {/* AI Agents mini panel */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+            <div className="bg-w-surface rounded-lg p-4 border border-w-border">
               <div className="flex items-center justify-between mb-3">
-                <h2 className="text-sm font-bold text-slate-800">AI Agents</h2>
-                <span className="text-xs bg-emerald-50 text-emerald-600 font-semibold px-2 py-0.5 rounded-full">
+                <h2 className="text-sm font-semibold text-w-text">AI Agents</h2>
+                <span className="text-[10px] bg-green-50 text-w-accent2 font-semibold px-2 py-0.5 rounded-full border border-green-200">
                   8 Running
                 </span>
               </div>
@@ -186,7 +161,7 @@ export default function DashboardPage() {
                 <AgentCard emoji="💬" name="Conversation Agent" stat="35 active chats"         status="active" />
                 <AgentCard emoji="✍️" name="Copywriter Agent"   stat="5,600 messages written"  status="idle"   />
               </div>
-              <button className="mt-3 w-full text-xs text-slate-500 hover:text-blue-600 font-medium transition-colors flex items-center justify-center gap-1">
+              <button className="mt-3 w-full text-[10px] text-w-text-dim hover:text-w-accent font-medium transition-colors flex items-center justify-center gap-1">
                 View all agents <ChevronRight size={12} />
               </button>
             </div>

@@ -45,20 +45,19 @@ export default function LeadsPage() {
   }, [search, status, source]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50 overflow-hidden">
+    <div className="flex flex-col h-screen bg-w-bg overflow-hidden">
 
       {/* ── Page Header ── */}
-      <div className="bg-white border-b border-gray-100 px-5 py-4 flex items-center justify-between shrink-0">
+      <div className="bg-w-surface border-b border-w-border px-5 py-4 flex items-center justify-between shrink-0">
         <div>
-          <h1 className="text-lg font-bold text-slate-800">Leads CRM</h1>
-          <p className="text-xs text-slate-400 mt-0.5">
-            <span className="text-emerald-500 font-semibold">● </span>
-            {MOCK_LEADS.length} total leads · {MOCK_LEADS.filter(l => l.status === "Interested" || l.status === "Demo Booked").length} hot
+          <h1 className="text-xl font-bold text-w-text">Leads CRM</h1>
+          <p className="text-xs text-w-text-dim mt-0.5">
+            2,420 total leads · 47 hot 🔥 · 342 replied today
           </p>
         </div>
         <button
           onClick={() => setShowImport(true)}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-xl transition-colors"
+          className="flex items-center gap-2 bg-w-accent hover:bg-blue-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition-colors"
         >
           + Import Leads
         </button>
@@ -77,7 +76,7 @@ export default function LeadsPage() {
       <div className="flex flex-1 overflow-hidden">
 
         {/* Table */}
-        <div className="flex-1 flex flex-col overflow-hidden bg-white">
+        <div className="flex-1 flex flex-col overflow-hidden">
           <LeadsTable
             leads={filtered}
             onLeadClick={setSelectedLead}

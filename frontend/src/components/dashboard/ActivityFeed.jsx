@@ -2,16 +2,16 @@ import React from "react";
 // ── Single Activity Item ────────────────────────────────────
 function ActivityItem({ icon, color, bg, text, time, badge }) {
   return (
-    <div className="flex items-start gap-3 py-3 border-b border-gray-50 last:border-0">
+    <div className="flex items-start gap-3 py-2.5 border-b border-w-border last:border-0">
       <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${bg}`}>
         <span className={`text-sm ${color}`}>{icon}</span>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-slate-700 leading-snug">{text}</p>
-        <p className="text-xs text-slate-400 mt-0.5">{time}</p>
+        <p className="text-xs text-w-text leading-snug">{text}</p>
+        <p className="text-[10px] text-w-text-dim mt-0.5">{time}</p>
       </div>
       {badge && (
-        <span className="text-xs bg-blue-50 text-blue-600 font-semibold px-2 py-0.5 rounded-full shrink-0">
+        <span className="text-[10px] bg-blue-50 text-w-accent font-semibold px-2 py-0.5 rounded-full shrink-0 border border-blue-200">
           {badge}
         </span>
       )}
@@ -23,7 +23,7 @@ function ActivityItem({ icon, color, bg, text, time, badge }) {
 const activities = [
   {
     icon: "🔍",
-    color: "text-blue-500",
+    color: "text-w-accent",
     bg: "bg-blue-50",
     text: "Scout scraped 142 leads from Google Maps",
     time: "2 min ago",
@@ -31,7 +31,7 @@ const activities = [
   },
   {
     icon: "✅",
-    color: "text-emerald-500",
+    color: "text-w-accent2",
     bg: "bg-emerald-50",
     text: "Rahul Sharma — booking call intent detected",
     time: "5 min ago",
@@ -39,7 +39,7 @@ const activities = [
   },
   {
     icon: "⚠️",
-    color: "text-amber-500",
+    color: "text-w-accent3",
     bg: "bg-amber-50",
     text: "Vikram Bajaj escalated to human review",
     time: "8 min ago",
@@ -47,7 +47,7 @@ const activities = [
   },
   {
     icon: "📤",
-    color: "text-violet-500",
+    color: "text-w-accent4",
     bg: "bg-violet-50",
     text: "89 messages scheduled for 6:00 PM send",
     time: "12 min ago",
@@ -57,11 +57,11 @@ const activities = [
 
 export default function ActivityFeed() {
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+    <div className="bg-w-surface rounded-lg p-4 border border-w-border">
       <div className="flex items-center justify-between mb-2">
-        <h2 className="text-sm font-bold text-slate-800">Live Activity</h2>
-        <span className="flex items-center gap-1 text-xs text-emerald-500 font-medium">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+        <h2 className="text-sm font-semibold text-w-text">Live Activity</h2>
+        <span className="flex items-center gap-1 text-[10px] text-w-accent2 font-medium">
+          <span className="w-1.5 h-1.5 rounded-full bg-w-accent2 animate-pulse" />
           Live
         </span>
       </div>

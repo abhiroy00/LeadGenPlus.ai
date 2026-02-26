@@ -188,10 +188,10 @@ export default function CampaignsPage() {
 
   // ── List view ──
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-w-bg">
 
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 px-5 py-4">
+      <div className="bg-w-bg  border-gray-100 px-5 py-4">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-lg font-bold text-slate-800">Campaigns</h1>

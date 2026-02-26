@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadGenAI — Figma Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #1a1a2e;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ─── FIGMA-LIKE CANVAS WRAPPER ─── */
+.figma-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* TOP BAR */
+.topbar {
+  height: 48px;
+  background: #2a2a3e;
+  border-bottom: 1px solid #3a3a5e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.topbar-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; font-weight: 700;
+  color: #a78bfa;
+}
+
+.topbar-pages {
+  display: flex;
+  gap: 2px;
+}
+
+.page-tab {
+  padding: 6px 14px;
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #8888aa;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.page-tab:hover { background: #3a3a5e; color: #ccc; }
+.page-tab.active { background: #4f46e5; color: #fff; }
+
+.topbar-right {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: #8888aa;
+}
+
+.zoom-info {
+  background: #3a3a5e;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+}
+
+/* MAIN LAYOUT */
+.main-layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* LEFT PANEL */
+.left-panel {
+  width: 220px;
+  background: #22223a;
+  border-right: 1px solid #3a3a5e;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.panel-section {
+  padding: 12px;
+  border-bottom: 1px solid #3a3a5e;
+}
+
+.panel-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #6666aa;
+  margin-bottom: 8px;
+}
+
+.layer-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  color: #aaaacc;
+  transition: all 0.15s;
+}
+
+.layer-item:hover { background: #3a3a5e; color: #eee; }
+.layer-item.active { background: #4f46e5; color: #fff; }
+
+.layer-icon { font-size: 12px; width: 16px; }
+
+/* CANVAS */
+.canvas {
+  flex: 1;
+  overflow: auto;
+  background: #12122a;
+  background-image:
+    radial-gradient(circle, #3a3a5e 1px, transparent 1px);
+  background-size: 24px 24px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+  width: 240px;
+  background: #22223a;
+  border-left: 1px solid #3a3a5e;
+  overflow-y: auto;
+  flex-shrink: 0;
+  padding: 12px;
+}
+
+.prop-group {
+  margin-bottom: 16px;
+}
+
+.prop-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #6666aa;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.prop-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.prop-input {
+  flex: 1;
+  background: #1a1a2e;
+  border: 1px solid #3a3a5e;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 10px;
+  color: #aaaacc;
+  font-family: 'Space Mono', monospace;
+}
+
+.color-swatch {
+  width: 32px; height: 28px;
+  border-radius: 6px;
+  border: 1px solid #3a3a5e;
+  cursor: pointer;
+}
+
+/* ─── WIREFRAME SCREENS ─── */
+.screen-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.screen-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: #6666aa;
+  letter-spacing: 1px;
+}
+
+.screen-frame {
+  background: #f5f5f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 2px solid #3a3a5e;
+  position: relative;
+}
+
+/* WIREFRAME COLOR PALETTE - Figma grey style */
+:root {
+  --w-bg: #f5f5f0;
+  --w-surface: #ffffff;
+  --w-surface2: #f0f0eb;
+  --w-border: #d8d8d0;
+  --w-border2: #c0c0b8;
+  --w-text: #1a1a2e;
+  --w-text-mid: #666660;
+  --w-text-dim: #999990;
+  --w-accent: #2563eb;
+  --w-accent2: #10b981;
+  --w-accent3: #f59e0b;
+  --w-accent4: #8b5cf6;
+  --w-red: #ef4444;
+  --w-sidebar: #1e293b;
+}
+
+/* ─── SCREEN 1: DASHBOARD ─── */
+.s1 { width: 1100px; background: var(--w-bg); }
+
+.wf-topnav {
+  height: 52px;
+  background: var(--w-sidebar);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 16px;
+}
+
+.wf-logo-box {
+  width: 32px; height: 32px;
+  background: var(--w-accent2);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+.wf-logo-text {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.wf-nav-spacer { flex: 1; }
+
+.wf-nav-items {
+  display: flex; gap: 24px;
+}
+
+.wf-nav-item {
+  color: #94a3b8;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.wf-nav-item.active { color: #fff; }
+
+.wf-avatar {
+  width: 32px; height: 32px;
+  background: #4f46e5;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.wf-body {
+  display: flex;
+  height: calc(100% - 52px);
+}
+
+.wf-sidebar {
+  width: 200px;
+  background: var(--w-sidebar);
+  padding: 16px 0;
+  flex-shrink: 0;
+}
+
+.wf-sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 12px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wf-sidebar-item:hover, .wf-sidebar-item.active {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.wf-sidebar-item .si-icon { font-size: 14px; width: 18px; }
+
+.wf-sidebar-badge {
+  margin-left: auto;
+  background: var(--w-accent2);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 100px;
+}
+
+.wf-main {
+  flex: 1;
+  padding: 24px;
+  overflow: hidden;
+  background: var(--w-bg);
+}
+
+.wf-page-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--w-text);
+  margin-bottom: 4px;
+}
+
+.wf-page-sub {
+  font-size: 12px;
+  color: var(--w-text-dim);
+  margin-bottom: 20px;
+}
+
+.wf-stats-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wf-stat {
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.wf-stat-val {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--w-text);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.wf-stat-label {
+  font-size: 10px;
+  color: var(--w-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wf-stat-change {
+  font-size: 10px;
+  color: var(--w-accent2);
+  margin-top: 4px;
+}
+
+.wf-charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wf-card {
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.wf-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--w-text);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wf-card-badge {
+  font-size: 10px;
+  background: #f0fdf4;
+  color: var(--w-accent2);
+  border: 1px solid #bbf7d0;
+  padding: 2px 8px;
+  border-radius: 100px;
+}
+
+/* Chart placeholder */
+.wf-chart {
+  height: 120px;
+  background: var(--w-surface2);
+  border-radius: 8px;
+  border: 1px dashed var(--w-border);
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.wf-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  min-width: 0;
+}
+
+.wf-donut {
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #2563eb 0% 40%,
+    #10b981 40% 65%,
+    #f59e0b 65% 80%,
+    #e5e7eb 80% 100%
+  );
+  margin: 0 auto;
+  position: relative;
+}
+
+.wf-donut-inner {
+  position: absolute;
+  top: 20px; left: 20px; right: 20px; bottom: 20px;
+  background: var(--w-surface);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--w-text);
+}
+
+.wf-donut-legend {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wf-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--w-text-mid);
+}
+
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.wf-table-head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+  padding: 8px 12px;
+  background: var(--w-surface2);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--w-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.wf-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 80px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--w-border);
+  font-size: 11px;
+  color: var(--w-text-mid);
+  align-items: center;
+}
+
+.wf-pill {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: 100px;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.pill-g { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+.pill-b { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.pill-y { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.pill-r { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+/* ─── SCREEN 2: LEADS PAGE ─── */
+.s2 { width: 1100px; }
+
+.wf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.wf-search {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+  height: 34px;
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--w-text-dim);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wf-filter-btn {
+  height: 34px;
+  padding: 0 12px;
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--w-text-mid);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.wf-btn-primary {
+  height: 34px;
+  padding: 0 14px;
+  background: var(--w-accent);
+  border-radius: 8px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.wf-btn-green {
+  height: 34px;
+  padding: 0 14px;
+  background: var(--w-accent2);
+  border-radius: 8px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Lead table bigger */
+.wf-lead-table-head {
+  display: grid;
+  grid-template-columns: 30px 2fr 1.5fr 1fr 1fr 80px 80px 80px;
+  padding: 10px 14px;
+  background: var(--w-surface2);
+  border-radius: 6px 6px 0 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--w-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 1px solid var(--w-border);
+  border-bottom: none;
+}
+
+.wf-lead-row {
+  display: grid;
+  grid-template-columns: 30px 2fr 1.5fr 1fr 1fr 80px 80px 80px;
+  padding: 12px 14px;
+  border: 1px solid var(--w-border);
+  border-top: none;
+  font-size: 11px;
+  color: var(--w-text-mid);
+  align-items: center;
+  background: var(--w-surface);
+  transition: background 0.1s;
+}
+
+.wf-lead-row:hover { background: #f8f8f4; }
+
+.wf-avatar-sm {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.wf-lead-name-col {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wf-lead-name { font-weight: 600; color: var(--w-text); font-size: 12px; }
+.wf-lead-company { font-size: 10px; color: var(--w-text-dim); }
+
+.wf-score-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wf-score-track {
+  flex: 1;
+  height: 4px;
+  background: var(--w-surface2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.wf-score-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.wf-checkbox {
+  width: 14px; height: 14px;
+  border: 1.5px solid var(--w-border2);
+  border-radius: 3px;
+}
+
+.wf-action-icons {
+  display: flex;
+  gap: 4px;
+}
+
+.wf-icon-btn {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--w-surface2);
+  border: 1px solid var(--w-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+/* ─── SCREEN 3: CAMPAIGN BUILDER ─── */
+.s3 { width: 1100px; }
+
+.wf-campaign-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.wf-campaign-body {
+  display: grid;
+  grid-template-columns: 280px 1fr 260px;
+  gap: 0;
+  border: 1px solid var(--w-border);
+  border-radius: 10px;
+  overflow: hidden;
+  height: 500px;
+}
+
+.wf-step-panel {
+  background: var(--w-surface2);
+  border-right: 1px solid var(--w-border);
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.wf-step-panel-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--w-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.wf-step-block {
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 8px;
+  cursor: grab;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wf-step-block:hover {
+  border-color: var(--w-accent);
+  box-shadow: 0 2px 8px rgba(37,99,235,0.15);
+}
+
+.wf-step-icon {
+  width: 30px; height: 30px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.si-blue { background: #eff6ff; }
+.si-green { background: #f0fdf4; }
+.si-orange { background: #fff7ed; }
+.si-purple { background: #faf5ff; }
+.si-red { background: #fef2f2; }
+
+.wf-step-info .s-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--w-text);
+}
+
+.wf-step-info .s-desc {
+  font-size: 10px;
+  color: var(--w-text-dim);
+}
+
+/* FLOW CANVAS */
+.wf-flow-canvas {
+  background: var(--w-bg);
+  background-image: radial-gradient(circle, #d8d8d0 1px, transparent 1px);
+  background-size: 20px 20px;
+  overflow: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.wf-flow-node {
+  background: var(--w-surface);
+  border: 1.5px solid var(--w-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  min-width: 200px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.wf-flow-node:hover {
+  border-color: var(--w-accent);
+  box-shadow: 0 4px 16px rgba(37,99,235,0.15);
+}
+
+.wf-flow-node.selected {
+  border-color: var(--w-accent);
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+}
+
+.wf-flow-connector {
+  width: 2px;
+  height: 30px;
+  background: var(--w-border2);
+  margin: 0 auto;
+  position: relative;
+}
+
+.wf-flow-connector::after {
+  content: '▼';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--w-border2);
+}
+
+.wf-flow-branch {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  position: relative;
+}
+
+.wf-flow-branch-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: auto;
+  width: calc(100% - 40px);
+  height: 2px;
+  background: var(--w-border2);
+  transform: translateX(-50%);
+}
+
+.wf-node-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.wf-node-type {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.nt-trigger { background: #fef9c3; color: #854d0e; }
+.nt-action { background: #eff6ff; color: #1d4ed8; }
+.nt-condition { background: #faf5ff; color: #6d28d9; }
+.nt-delay { background: #f0fdf4; color: #166534; }
+.nt-ai { background: #fff7ed; color: #c2410c; }
+
+.wf-node-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--w-text);
+}
+
+.wf-node-detail {
+  font-size: 10px;
+  color: var(--w-text-dim);
+  line-height: 1.5;
+}
+
+/* Properties panel */
+.wf-props-panel {
+  background: var(--w-surface);
+  border-left: 1px solid var(--w-border);
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.wf-prop-section {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--w-border);
+}
+
+.wf-prop-section:last-child { border-bottom: none; }
+
+.wf-prop-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--w-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.wf-field {
+  margin-bottom: 10px;
+}
+
+.wf-field-label {
+  font-size: 10px;
+  color: var(--w-text-dim);
+  margin-bottom: 4px;
+}
+
+.wf-field-input {
+  width: 100%;
+  background: var(--w-surface2);
+  border: 1px solid var(--w-border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: var(--w-text);
+}
+
+.wf-field-select {
+  width: 100%;
+  background: var(--w-surface2);
+  border: 1px solid var(--w-border);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: var(--w-text);
+}
+
+.wf-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--w-text-mid);
+  margin-bottom: 8px;
+}
+
+.wf-toggle {
+  width: 32px; height: 18px;
+  background: var(--w-accent);
+  border-radius: 100px;
+  position: relative;
+}
+
+.wf-toggle::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  top: 2px; right: 2px;
+  transition: all 0.2s;
+}
+
+.wf-toggle.off { background: var(--w-border2); }
+.wf-toggle.off::after { right: auto; left: 2px; }
+
+/* ─── SCREEN 4: WhatsApp Chat View ─── */
+.s4 { width: 1100px; }
+
+.wf-wa-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr 280px;
+  height: 560px;
+  border: 1px solid var(--w-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Chat list */
+.wf-chat-list {
+  border-right: 1px solid var(--w-border);
+  background: var(--w-surface);
+  display: flex;
+  flex-direction: column;
+}
+
+.wf-chat-search {
+  padding: 12px;
+  border-bottom: 1px solid var(--w-border);
+}
+
+.wf-search-input {
+  width: 100%;
+  height: 32px;
+  background: var(--w-surface2);
+  border: 1px solid var(--w-border);
+  border-radius: 20px;
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--w-text-dim);
+  display: flex; align-items: center;
+}
+
+.wf-chat-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--w-border);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.wf-chat-item:hover, .wf-chat-item.active { background: var(--w-surface2); }
+.wf-chat-item.active { border-left: 3px solid #25d366; }
+
+.wf-chat-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.wf-chat-info { flex: 1; min-width: 0; }
+.wf-chat-name { font-size: 12px; font-weight: 600; color: var(--w-text); }
+.wf-chat-preview { font-size: 10px; color: var(--w-text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wf-chat-meta { text-align: right; flex-shrink: 0; }
+.wf-chat-time { font-size: 10px; color: var(--w-text-dim); }
+
+.wf-chat-badge {
+  width: 18px; height: 18px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 4px;
+  margin-left: auto;
+}
+
+/* Chat window */
+.wf-chat-window {
+  display: flex;
+  flex-direction: column;
+  background: #e5ddd5;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.wf-chat-header {
+  height: 52px;
+  background: #075e54;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+}
+
+.wf-chat-header-name { color: #fff; font-size: 13px; font-weight: 600; }
+.wf-chat-header-sub { color: #9de3d9; font-size: 10px; }
+
+.wf-messages {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wf-msg {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.wf-msg-out {
+  background: #dcf8c6;
+  color: #1a1a2e;
+  align-self: flex-end;
+  border-radius: 8px 8px 2px 8px;
+}
+
+.wf-msg-in {
+  background: #fff;
+  color: #1a1a2e;
+  align-self: flex-start;
+  border-radius: 8px 8px 8px 2px;
+}
+
+.wf-msg-time {
+  font-size: 9px;
+  color: #888;
+  text-align: right;
+  margin-top: 2px;
+}
+
+.wf-ai-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: #666;
+  margin-bottom: 2px;
+  align-self: flex-end;
+}
+
+.ai-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--w-accent3);
+}
+
+.wf-chat-input-area {
+  height: 52px;
+  background: var(--w-surface);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 10px;
+  border-top: 1px solid var(--w-border);
+}
+
+.wf-input-box {
+  flex: 1;
+  height: 36px;
+  background: var(--w-surface2);
+  border: 1px solid var(--w-border);
+  border-radius: 20px;
+  padding: 0 14px;
+  font-size: 11px;
+  color: var(--w-text-dim);
+  display: flex; align-items: center;
+}
+
+.wf-send-btn {
+  width: 36px; height: 36px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Lead detail panel */
+.wf-lead-detail {
+  border-left: 1px solid var(--w-border);
+  background: var(--w-surface);
+  overflow-y: auto;
+}
+
+.wf-lead-detail-header {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid var(--w-border);
+}
+
+.wf-ld-avatar {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.wf-ld-name { font-size: 14px; font-weight: 700; color: var(--w-text); }
+.wf-ld-title { font-size: 11px; color: var(--w-text-dim); margin-top: 2px; }
+
+.wf-score-circle {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: conic-gradient(var(--w-accent2) 0% 85%, #e5e7eb 85% 100%);
+  margin: 12px auto;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--w-text);
+  position: relative;
+}
+
+.wf-score-inner {
+  position: absolute;
+  top: 8px; left: 8px; right: 8px; bottom: 8px;
+  background: var(--w-surface);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wf-info-grid {
+  padding: 14px;
+}
+
+.wf-info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--w-border);
+  font-size: 11px;
+}
+
+.wf-info-key { color: var(--w-text-dim); }
+.wf-info-val { color: var(--w-text); font-weight: 500; }
+
+.wf-quick-actions {
+  padding: 14px;
+}
+
+.wf-qa-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--w-text-dim);
+  margin-bottom: 8px;
+}
+
+.wf-qa-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--w-border);
+  border-radius: 8px;
+  font-size: 11px;
+  color: var(--w-text-mid);
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: var(--w-surface2);
+}
+
+/* ─── SCREEN 5: ANALYTICS ─── */
+.s5 { width: 1100px; }
+
+.wf-analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wf-analytics-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wf-line-chart {
+  height: 140px;
+  background: var(--w-surface2);
+  border-radius: 8px;
+  border: 1px dashed var(--w-border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.wf-line-path {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+}
+
+.wf-funnel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+}
+
+.wf-funnel-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wf-funnel-bar {
+  height: 28px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.wf-funnel-label {
+  font-size: 10px;
+  color: var(--w-text-dim);
+  width: 80px;
+  text-align: right;
+}
+
+.wf-funnel-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--w-text);
+  width: 50px;
+}
+
+/* ─── SCREEN 6: AI AGENT MONITOR ─── */
+.s6 { width: 1100px; }
+
+.wf-agent-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wf-agent-card {
+  background: var(--w-surface);
+  border: 1px solid var(--w-border);
+  border-radius: 10px;
+  padding: 16px;
+  position: relative;
+}
+
+.wf-agent-status-dot {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--w-accent2);
+}
+
+.wf-agent-status-dot.idle { background: var(--w-accent3); }
+.wf-agent-status-dot.error { background: var(--w-red); }
+
+.wf-agent-emoji { font-size: 24px; margin-bottom: 8px; }
+.wf-agent-name { font-size: 13px; font-weight: 700; color: var(--w-text); margin-bottom: 4px; }
+.wf-agent-stat { font-size: 10px; color: var(--w-text-dim); margin-bottom: 2px; }
+
+.wf-agent-progress {
+  height: 4px;
+  background: var(--w-surface2);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.wf-agent-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: var(--w-accent2);
+}
+
+.wf-log-panel {
+  background: #0f172a;
+  border-radius: 10px;
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: #94a3b8;
+  height: 160px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.log-line { display: flex; gap: 10px; }
+.log-time { color: #475569; flex-shrink: 0; }
+.log-agent { color: #7c3aed; flex-shrink: 0; width: 100px; }
+.log-msg { color: #94a3b8; }
+.log-success { color: #10b981; }
+.log-warn { color: #f59e0b; }
+
+/* Screen active highlight */
+.screen-frame.active-screen {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79,70,229,0.2), 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* PAGE NAVIGATION */
+.canvas > .screen-wrapper { display: none; }
+.canvas > .screen-wrapper.visible { display: flex; }
+</style>
+</head>
+<body>
+
+<div class="figma-shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-logo">
+      <span>🤖</span> LeadGenAI — Wireframes
+    </div>
+    <div class="topbar-pages">
+      <div class="page-tab active" onclick="showScreen(0, this)">Dashboard</div>
+      <div class="page-tab" onclick="showScreen(1, this)">Leads CRM</div>
+      <div class="page-tab" onclick="showScreen(2, this)">Campaign Builder</div>
+      <div class="page-tab" onclick="showScreen(3, this)">WhatsApp Inbox</div>
+      <div class="page-tab" onclick="showScreen(4, this)">Analytics</div>
+      <div class="page-tab" onclick="showScreen(5, this)">AI Agents</div>
+    </div>
+    <div class="topbar-right">
+      <div class="zoom-info">100%</div>
+      <span>Wireframe v1.0</span>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-layout">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+      <div class="panel-section">
+        <div class="panel-title">Pages</div>
+        <div class="layer-item active" onclick="showScreen(0, null)"><span class="layer-icon">📊</span>Dashboard</div>
+        <div class="layer-item" onclick="showScreen(1, null)"><span class="layer-icon">👥</span>Leads CRM</div>
+        <div class="layer-item" onclick="showScreen(2, null)"><span class="layer-icon">⚡</span>Campaign Builder</div>
+        <div class="layer-item" onclick="showScreen(3, null)"><span class="layer-icon">💬</span>WhatsApp Inbox</div>
+        <div class="layer-item" onclick="showScreen(4, null)"><span class="layer-icon">📈</span>Analytics</div>
+        <div class="layer-item" onclick="showScreen(5, null)"><span class="layer-icon">🤖</span>AI Agents</div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-title">Components</div>
+        <div class="layer-item"><span class="layer-icon">🔲</span>Sidebar Nav</div>
+        <div class="layer-item"><span class="layer-icon">📊</span>Stats Card</div>
+        <div class="layer-item"><span class="layer-icon">📋</span>Table Row</div>
+        <div class="layer-item"><span class="layer-icon">💬</span>Chat Bubble</div>
+        <div class="layer-item"><span class="layer-icon">🔘</span>Flow Node</div>
+        <div class="layer-item"><span class="layer-icon">🏷️</span>Status Pill</div>
+        <div class="layer-item"><span class="layer-icon">📉</span>Chart Block</div>
+      </div>
+      <div class="panel-section">
+        <div class="panel-title">Colors</div>
+        <div class="layer-item"><span style="display:inline-block;width:12px;height:12px;background:#2563eb;border-radius:3px;"></span> Primary Blue</div>
+        <div class="layer-item"><span style="display:inline-block;width:12px;height:12px;background:#10b981;border-radius:3px;"></span> Success Green</div>
+        <div class="layer-item"><span style="display:inline-block;width:12px;height:12px;background:#f59e0b;border-radius:3px;"></span> Warning Amber</div>
+        <div class="layer-item"><span style="display:inline-block;width:12px;height:12px;background:#8b5cf6;border-radius:3px;"></span> AI Purple</div>
+        <div class="layer-item"><span style="display:inline-block;width:12px;height:12px;background:#25d366;border-radius:3px;"></span> WhatsApp Green</div>
+      </div>
+    </div>
+
+    <!-- CANVAS -->
+    <div class="canvas" id="canvas">
+
+      <!-- SCREEN 1: DASHBOARD -->
+      <div class="screen-wrapper visible" id="screen-0">
+        <div class="screen-label">// Screen 1 — Main Dashboard</div>
+        <div class="screen-frame active-screen s1">
+          <!-- Top Nav -->
+          <div class="wf-topnav">
+            <div class="wf-logo-box">🤖</div>
+            <div class="wf-logo-text">LeadGenAI</div>
+            <div class="wf-nav-spacer"></div>
+            <div class="wf-nav-items">
+              <div class="wf-nav-item active">Dashboard</div>
+              <div class="wf-nav-item">Campaigns</div>
+              <div class="wf-nav-item">Leads</div>
+              <div class="wf-nav-item">WhatsApp</div>
+              <div class="wf-nav-item">Email</div>
+            </div>
+            <div style="width:24px"></div>
+            <div class="wf-avatar">AK</div>
+          </div>
+          <!-- Body -->
+          <div class="wf-body" style="height:600px">
+            <!-- Sidebar -->
+            <div class="wf-sidebar">
+              <div class="wf-sidebar-item active"><span class="si-icon">📊</span> Dashboard</div>
+              <div class="wf-sidebar-item"><span class="si-icon">👥</span> Leads <span class="wf-sidebar-badge">2.4K</span></div>
+              <div class="wf-sidebar-item"><span class="si-icon">⚡</span> Campaigns</div>
+              <div class="wf-sidebar-item"><span class="si-icon">💬</span> WhatsApp <span class="wf-sidebar-badge">48</span></div>
+              <div class="wf-sidebar-item"><span class="si-icon">📧</span> Email</div>
+              <div class="wf-sidebar-item"><span class="si-icon">🤖</span> AI Agents</div>
+              <div class="wf-sidebar-item"><span class="si-icon">📈</span> Analytics</div>
+              <div class="wf-sidebar-item"><span class="si-icon">⚙️</span> Settings</div>
+            </div>
+            <!-- Main Content -->
+            <div class="wf-main">
+              <div class="wf-page-title">Good morning, Arjun 👋</div>
+              <div class="wf-page-sub">Here's your campaign performance overview — Today, Feb 22</div>
+              <!-- Stats -->
+              <div class="wf-stats-row">
+                <div class="wf-stat">
+                  <div class="wf-stat-val" style="color:#2563eb">8,420</div>
+                  <div class="wf-stat-label">Leads Today</div>
+                  <div class="wf-stat-change">↑ +12% vs yesterday</div>
+                </div>
+                <div class="wf-stat">
+                  <div class="wf-stat-val" style="color:#25d366">84%</div>
+                  <div class="wf-stat-label">WA Open Rate</div>
+                  <div class="wf-stat-change">↑ Industry avg 35%</div>
+                </div>
+                <div class="wf-stat">
+                  <div class="wf-stat-val" style="color:#10b981">342</div>
+                  <div class="wf-stat-label">Replies Today</div>
+                  <div class="wf-stat-change">↑ +8% this week</div>
+                </div>
+                <div class="wf-stat">
+                  <div class="wf-stat-val" style="color:#f59e0b">47</div>
+                  <div class="wf-stat-label">Hot Leads 🔥</div>
+                  <div class="wf-stat-change">↑ Needs follow-up</div>
+                </div>
+                <div class="wf-stat">
+                  <div class="wf-stat-val" style="color:#8b5cf6">₹2.4L</div>
+                  <div class="wf-stat-label">Pipeline Value</div>
+                  <div class="wf-stat-change">↑ This month</div>
+                </div>
+              </div>
+              <!-- Charts -->
+              <div class="wf-charts-row">
+                <div class="wf-card">
+                  <div class="wf-card-title">
+                    Campaign Performance (7 Days)
+                    <span class="wf-card-badge">Live</span>
+                  </div>
+                  <div class="wf-chart">
+                    <div class="wf-bar" style="height:60%;background:#2563eb;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:80%;background:#2563eb;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:55%;background:#2563eb;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:90%;background:#2563eb;"></div>
+                    <div class="wf-bar" style="height:70%;background:#10b981;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:85%;background:#10b981;"></div>
+                    <div class="wf-bar" style="height:95%;background:#25d366;"></div>
+                    <div class="wf-bar" style="height:75%;background:#25d366;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:88%;background:#8b5cf6;"></div>
+                    <div class="wf-bar" style="height:60%;background:#8b5cf6;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:100%;background:#f59e0b;"></div>
+                    <div class="wf-bar" style="height:82%;background:#f59e0b;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:78%;background:#2563eb;opacity:0.7;"></div>
+                    <div class="wf-bar" style="height:91%;background:#2563eb;"></div>
+                  </div>
+                  <div style="display:flex;gap:16px;margin-top:8px;font-size:10px;color:#666;">
+                    <span><span style="display:inline-block;width:8px;height:8px;background:#2563eb;border-radius:2px;margin-right:4px;"></span>Email Sent</span>
+                    <span><span style="display:inline-block;width:8px;height:8px;background:#25d366;border-radius:2px;margin-right:4px;"></span>WA Sent</span>
+                    <span><span style="display:inline-block;width:8px;height:8px;background:#10b981;border-radius:2px;margin-right:4px;"></span>Replies</span>
+                    <span><span style="display:inline-block;width:8px;height:8px;background:#f59e0b;border-radius:2px;margin-right:4px;"></span>Converted</span>
+                  </div>
+                </div>
+                <div class="wf-card">
+                  <div class="wf-card-title">Lead Sources</div>
+                  <div class="wf-donut"></div>
+                  <div class="wf-donut-legend" style="margin-top:12px;">
+                    <div class="wf-legend-item"><div class="legend-dot" style="background:#2563eb"></div> LinkedIn (40%)</div>
+                    <div class="wf-legend-item"><div class="legend-dot" style="background:#10b981"></div> Google Maps (25%)</div>
+                    <div class="wf-legend-item"><div class="legend-dot" style="background:#f59e0b"></div> CSV Import (15%)</div>
+                    <div class="wf-legend-item"><div class="legend-dot" style="background:#e5e7eb"></div> Other (20%)</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Table -->
+              <div class="wf-card">
+                <div class="wf-card-title">Active Campaigns</div>
+                <div class="wf-table-head">
+                  <div>Campaign Name</div>
+                  <div>Leads</div>
+                  <div>Sent</div>
+                  <div>Open Rate</div>
+                  <div>Status</div>
+                </div>
+                <div class="wf-table-row">
+                  <div>SaaS Founders Outreach Q1</div>
+                  <div>1,240</div>
+                  <div>980</div>
+                  <div>82%</div>
+                  <div><span class="wf-pill pill-g">Running</span></div>
+                </div>
+                <div class="wf-table-row">
+                  <div>Restaurant Owners WA Blast</div>
+                  <div>3,800</div>
+                  <div>3,100</div>
+                  <div>91%</div>
+                  <div><span class="wf-pill pill-g">Running</span></div>
+                </div>
+                <div class="wf-table-row">
+                  <div>Real Estate Agents Email</div>
+                  <div>620</div>
+                  <div>620</div>
+                  <div>34%</div>
+                  <div><span class="wf-pill pill-y">Paused</span></div>
+                </div>
+                <div class="wf-table-row">
+                  <div>E-commerce Owners Nurture</div>
+                  <div>2,100</div>
+                  <div>1,850</div>
+                  <div>76%</div>
+                  <div><span class="wf-pill pill-b">Scheduled</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: LEADS -->
+      <div class="screen-wrapper" id="screen-1">
+        <div class="screen-label">// Screen 2 — Leads CRM</div>
+        <div class="screen-frame s2" style="background:var(--w-bg);padding:20px;">
+          <!-- Keep nav -->
+          <div class="wf-topnav" style="margin:-20px -20px 20px;"><div class="wf-logo-box">🤖</div><div class="wf-logo-text">LeadGenAI</div><div class="wf-nav-spacer"></div><div class="wf-nav-items"><div class="wf-nav-item">Dashboard</div><div class="wf-nav-item">Campaigns</div><div class="wf-nav-item active">Leads</div><div class="wf-nav-item">WhatsApp</div><div class="wf-nav-item">Email</div></div><div style="width:24px"></div><div class="wf-avatar">AK</div></div>
+          <div class="wf-page-title">Leads CRM</div>
+          <div class="wf-page-sub" style="margin-bottom:16px;">2,420 total leads · 47 hot 🔥 · 342 replied today</div>
+          <div class="wf-toolbar">
+            <div class="wf-search">🔍 &nbsp;Search by name, company, phone...</div>
+            <div class="wf-filter-btn">🏷️ Stage: All</div>
+            <div class="wf-filter-btn">📊 Score: All</div>
+            <div class="wf-filter-btn">📅 Date Added</div>
+            <div class="wf-filter-btn">🌐 Source: All</div>
+            <div class="wf-btn-green">⚡ Add to Campaign</div>
+            <div class="wf-btn-primary">+ Import Leads</div>
+          </div>
+          <div class="wf-lead-table-head">
+            <div><div class="wf-checkbox"></div></div>
+            <div>Name / Company</div>
+            <div>Contact</div>
+            <div>Source</div>
+            <div>AI Score</div>
+            <div>Stage</div>
+            <div>Last Touch</div>
+            <div>Actions</div>
+          </div>
+          <!-- Lead rows -->
+          <div class="wf-lead-row">
+            <div><div class="wf-checkbox" style="border-color:#2563eb;background:#eff6ff;"></div></div>
+            <div class="wf-lead-name-col"><div class="wf-avatar-sm" style="background:#2563eb">RS</div><div><div class="wf-lead-name">Rahul Sharma</div><div class="wf-lead-company">TechStart Pvt Ltd · CEO</div></div></div>
+            <div style="font-size:10px;"><div>📱 +91-98765-43210</div><div style="color:#666;">📧 rahul@techstart.in</div></div>
+            <div><span class="wf-pill pill-b">LinkedIn</span></div>
+            <div class="wf-score-bar"><div class="wf-score-track"><div class="wf-score-fill" style="width:92%;background:#10b981;"></div></div><span style="font-size:10px;font-weight:700;color:#10b981;">92</span></div>
+            <div><span class="wf-pill pill-g">Hot Lead 🔥</span></div>
+            <div style="font-size:10px;color:#666;">2h ago · WA</div>
+            <div class="wf-action-icons"><div class="wf-icon-btn">💬</div><div class="wf-icon-btn">📧</div><div class="wf-icon-btn">👁️</div></div>
+          </div>
+          <div class="wf-lead-row">
+            <div><div class="wf-checkbox"></div></div>
+            <div class="wf-lead-name-col"><div class="wf-avatar-sm" style="background:#8b5cf6">PG</div><div><div class="wf-lead-name">Priya Gupta</div><div class="wf-lead-company">FoodieHub · Founder</div></div></div>
+            <div style="font-size:10px;"><div>📱 +91-87654-32109</div><div style="color:#666;">📧 priya@foodiehub.com</div></div>
+            <div><span class="wf-pill" style="background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;">G. Maps</span></div>
+            <div class="wf-score-bar"><div class="wf-score-track"><div class="wf-score-fill" style="width:78%;background:#2563eb;"></div></div><span style="font-size:10px;font-weight:700;color:#2563eb;">78</span></div>
+            <div><span class="wf-pill pill-b">Interested</span></div>
+            <div style="font-size:10px;color:#666;">5h ago · Email</div>
+            <div class="wf-action-icons"><div class="wf-icon-btn">💬</div><div class="wf-icon-btn">📧</div><div class="wf-icon-btn">👁️</div></div>
+          </div>
+          <div class="wf-lead-row">
+            <div><div class="wf-checkbox"></div></div>
+            <div class="wf-lead-name-col"><div class="wf-avatar-sm" style="background:#10b981">AM</div><div><div class="wf-lead-name">Amir Malik</div><div class="wf-lead-company">RealProp Realty · Director</div></div></div>
+            <div style="font-size:10px;"><div>📱 +91-76543-21098</div><div style="color:#666;">📧 amir@realprop.in</div></div>
+            <div><span class="wf-pill pill-b">Apollo</span></div>
+            <div class="wf-score-bar"><div class="wf-score-track"><div class="wf-score-fill" style="width:65%;background:#f59e0b;"></div></div><span style="font-size:10px;font-weight:700;color:#f59e0b;">65</span></div>
+            <div><span class="wf-pill pill-y">Nurturing</span></div>
+            <div style="font-size:10px;color:#666;">1d ago · WA</div>
+            <div class="wf-action-icons"><div class="wf-icon-btn">💬</div><div class="wf-icon-btn">📧</div><div class="wf-icon-btn">👁️</div></div>
+          </div>
+          <div class="wf-lead-row">
+            <div><div class="wf-checkbox"></div></div>
+            <div class="wf-lead-name-col"><div class="wf-avatar-sm" style="background:#f59e0b">SK</div><div><div class="wf-lead-name">Sunita Kapoor</div><div class="wf-lead-company">FashionX Store · Owner</div></div></div>
+            <div style="font-size:10px;"><div>📱 +91-65432-10987</div><div style="color:#666;">📧 sunita@fashionx.in</div></div>
+            <div><span class="wf-pill" style="background:#faf5ff;color:#6d28d9;border:1px solid #e9d5ff;">CSV</span></div>
+            <div class="wf-score-bar"><div class="wf-score-track"><div class="wf-score-fill" style="width:42%;background:#ef4444;"></div></div><span style="font-size:10px;font-weight:700;color:#ef4444;">42</span></div>
+            <div><span class="wf-pill pill-r">Cold</span></div>
+            <div style="font-size:10px;color:#666;">3d ago · Email</div>
+            <div class="wf-action-icons"><div class="wf-icon-btn">💬</div><div class="wf-icon-btn">📧</div><div class="wf-icon-btn">👁️</div></div>
+          </div>
+          <div class="wf-lead-row">
+            <div><div class="wf-checkbox"></div></div>
+            <div class="wf-lead-name-col"><div class="wf-avatar-sm" style="background:#ef4444">VB</div><div><div class="wf-lead-name">Vikram Bajaj</div><div class="wf-lead-company">AutoDrive Motors · MD</div></div></div>
+            <div style="font-size:10px;"><div>📱 +91-54321-09876</div><div style="color:#666;">📧 vikram@autodrive.in</div></div>
+            <div><span class="wf-pill pill-b">LinkedIn</span></div>
+            <div class="wf-score-bar"><div class="wf-score-track"><div class="wf-score-fill" style="width:88%;background:#10b981;"></div></div><span style="font-size:10px;font-weight:700;color:#10b981;">88</span></div>
+            <div><span class="wf-pill pill-g">Hot Lead 🔥</span></div>
+            <div style="font-size:10px;color:#666;">30m ago · WA</div>
+            <div class="wf-action-icons"><div class="wf-icon-btn">💬</div><div class="wf-icon-btn">📧</div><div class="wf-icon-btn">👁️</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;font-size:11px;color:#666;">
+            <span>Showing 5 of 2,420 leads</span>
+            <div style="display:flex;gap:4px;">
+              <div class="wf-filter-btn" style="height:28px;padding:0 10px;font-size:10px;">‹ Prev</div>
+              <div class="wf-filter-btn" style="height:28px;padding:0 10px;font-size:10px;background:#2563eb;color:#fff;border-color:#2563eb;">1</div>
+              <div class="wf-filter-btn" style="height:28px;padding:0 10px;font-size:10px;">2</div>
+              <div class="wf-filter-btn" style="height:28px;padding:0 10px;font-size:10px;">3</div>
+              <div class="wf-filter-btn" style="height:28px;padding:0 10px;font-size:10px;">Next ›</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: CAMPAIGN BUILDER -->
+      <div class="screen-wrapper" id="screen-2">
+        <div class="screen-label">// Screen 3 — Visual Campaign Builder</div>
+        <div class="screen-frame s3" style="background:var(--w-bg);padding:20px;">
+          <div class="wf-topnav" style="margin:-20px -20px 20px;"><div class="wf-logo-box">🤖</div><div class="wf-logo-text">LeadGenAI</div><div class="wf-nav-spacer"></div><div class="wf-nav-items"><div class="wf-nav-item">Dashboard</div><div class="wf-nav-item active">Campaigns</div><div class="wf-nav-item">Leads</div></div><div style="width:24px"></div><div class="wf-avatar">AK</div></div>
+          <div class="wf-campaign-header">
+            <div><div class="wf-page-title">Campaign Builder</div><div class="wf-page-sub">SaaS Founders Q1 Outreach · Draft</div></div>
+            <div style="display:flex;gap:8px;"><div class="wf-filter-btn">👁️ Preview</div><div class="wf-btn-green">✅ Launch Campaign</div></div>
+          </div>
+          <div class="wf-campaign-body">
+            <!-- Step Library -->
+            <div class="wf-step-panel">
+              <div class="wf-step-panel-title">Step Library</div>
+              <div style="font-size:10px;color:#999;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">Triggers</div>
+              <div class="wf-step-block"><div class="wf-step-icon si-orange">🚀</div><div class="wf-step-info"><div class="s-name">New Lead Added</div><div class="s-desc">Starts when lead enters</div></div></div>
+              <div class="wf-step-block"><div class="wf-step-icon si-orange">📋</div><div class="wf-step-info"><div class="s-name">Form Submitted</div><div class="s-desc">Website/landing page</div></div></div>
+              <div style="font-size:10px;color:#999;margin:10px 0 8px;text-transform:uppercase;letter-spacing:1px;">Actions</div>
+              <div class="wf-step-block"><div class="wf-step-icon si-green">💬</div><div class="wf-step-info"><div class="s-name">Send WhatsApp</div><div class="s-desc">Template or AI message</div></div></div>
+              <div class="wf-step-block"><div class="wf-step-icon si-blue">📧</div><div class="wf-step-info"><div class="s-name">Send Email</div><div class="s-desc">HTML or plain text</div></div></div>
+              <div class="wf-step-block"><div class="wf-step-icon si-purple">🤖</div><div class="wf-step-info"><div class="s-name">AI Write Message</div><div class="s-desc">Personalized by GPT</div></div></div>
+              <div style="font-size:10px;color:#999;margin:10px 0 8px;text-transform:uppercase;letter-spacing:1px;">Logic</div>
+              <div class="wf-step-block"><div class="wf-step-icon si-purple">🔀</div><div class="wf-step-info"><div class="s-name">If / Else Branch</div><div class="s-desc">Conditional split</div></div></div>
+              <div class="wf-step-block"><div class="wf-step-icon si-green">⏰</div><div class="wf-step-info"><div class="s-name">Wait / Delay</div><div class="s-desc">Time-based wait</div></div></div>
+              <div class="wf-step-block"><div class="wf-step-icon si-red">🔔</div><div class="wf-step-info"><div class="s-name">Notify Team</div><div class="s-desc">Slack / email alert</div></div></div>
+            </div>
+
+            <!-- Flow Canvas -->
+            <div class="wf-flow-canvas">
+              <!-- Trigger -->
+              <div class="wf-flow-node selected" style="border-color:#f59e0b;">
+                <div class="wf-node-header">
+                  <span class="wf-node-type nt-trigger">⚡ Trigger</span>
+                </div>
+                <div class="wf-node-title">New Lead Added</div>
+                <div class="wf-node-detail">When lead score ≥ 50 and source = LinkedIn or Google Maps</div>
+              </div>
+              <div class="wf-flow-connector"></div>
+
+              <!-- AI Write -->
+              <div class="wf-flow-node">
+                <div class="wf-node-header">
+                  <span class="wf-node-type nt-ai">🤖 AI Action</span>
+                </div>
+                <div class="wf-node-title">AI Generate Message</div>
+                <div class="wf-node-detail">GPT-4o writes personalized WA intro using lead's LinkedIn + company data</div>
+              </div>
+              <div class="wf-flow-connector"></div>
+
+              <!-- Send WA -->
+              <div class="wf-flow-node">
+                <div class="wf-node-header">
+                  <span class="wf-node-type nt-action">💬 Action</span>
+                </div>
+                <div class="wf-node-title">Send WhatsApp Message</div>
+                <div class="wf-node-detail">Day 0 · AI-written intro message via Meta API</div>
+              </div>
+              <div class="wf-flow-connector"></div>
+
+              <!-- Wait -->
+              <div class="wf-flow-node">
+                <div class="wf-node-header">
+                  <span class="wf-node-type nt-delay">⏰ Delay</span>
+                </div>
+                <div class="wf-node-title">Wait 3 Days</div>
+                <div class="wf-node-detail">Pause until reply received OR 3 days elapsed</div>
+              </div>
+              <div class="wf-flow-connector"></div>
+
+              <!-- Branch -->
+              <div style="display:flex;flex-direction:column;align-items:center;width:100%;">
+                <div class="wf-flow-node" style="border-color:#8b5cf6;min-width:240px;">
+                  <div class="wf-node-header">
+                    <span class="wf-node-type nt-condition">🔀 Condition</span>
+                  </div>
+                  <div class="wf-node-title">Did Lead Reply?</div>
+                  <div class="wf-node-detail">Check WA reply status</div>
+                </div>
+                <div style="display:flex;gap:60px;margin-top:10px;align-items:flex-start;position:relative;">
+                  <div style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:#c0c0b8;"></div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                    <div style="font-size:10px;font-weight:700;color:#10b981;background:#f0fdf4;border:1px solid #bbf7d0;padding:2px 10px;border-radius:100px;">YES ✓</div>
+                    <div style="width:1px;height:12px;background:#c0c0b8;"></div>
+                    <div class="wf-flow-node" style="min-width:160px;">
+                      <div class="wf-node-header"><span class="wf-node-type nt-action">💬</span></div>
+                      <div class="wf-node-title" style="font-size:11px;">AI Auto-Reply</div>
+                      <div class="wf-node-detail" style="font-size:9px;">Conversation agent handles chat</div>
+                    </div>
+                  </div>
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
+                    <div style="font-size:10px;font-weight:700;color:#ef4444;background:#fef2f2;border:1px solid #fecaca;padding:2px 10px;border-radius:100px;">NO ✗</div>
+                    <div style="width:1px;height:12px;background:#c0c0b8;"></div>
+                    <div class="wf-flow-node" style="min-width:160px;">
+                      <div class="wf-node-header"><span class="wf-node-type nt-action">📧</span></div>
+                      <div class="wf-node-title" style="font-size:11px;">Send Follow-up Email</div>
+                      <div class="wf-node-detail" style="font-size:9px;">Day 3 · Different angle</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Properties Panel -->
+            <div class="wf-props-panel">
+              <div class="wf-prop-section">
+                <div class="wf-prop-title">Node Properties</div>
+                <div class="wf-field">
+                  <div class="wf-field-label">Step Name</div>
+                  <div class="wf-field-input">New Lead Trigger</div>
+                </div>
+                <div class="wf-field">
+                  <div class="wf-field-label">Trigger Condition</div>
+                  <div class="wf-field-select">Lead Score ≥ 50</div>
+                </div>
+                <div class="wf-field">
+                  <div class="wf-field-label">Source Filter</div>
+                  <div class="wf-field-select">LinkedIn, Google Maps</div>
+                </div>
+              </div>
+              <div class="wf-prop-section">
+                <div class="wf-prop-title">AI Settings</div>
+                <div class="wf-toggle-row">
+                  <span>AI Personalization</span>
+                  <div class="wf-toggle"></div>
+                </div>
+                <div class="wf-toggle-row">
+                  <span>Auto A/B Test</span>
+                  <div class="wf-toggle"></div>
+                </div>
+                <div class="wf-toggle-row">
+                  <span>Smart Timing</span>
+                  <div class="wf-toggle off"></div>
+                </div>
+                <div class="wf-field" style="margin-top:8px;">
+                  <div class="wf-field-label">AI Model</div>
+                  <div class="wf-field-select">GPT-4o (Recommended)</div>
+                </div>
+              </div>
+              <div class="wf-prop-section">
+                <div class="wf-prop-title">Campaign Stats</div>
+                <div style="font-size:11px;color:#666;display:flex;flex-direction:column;gap:6px;">
+                  <div style="display:flex;justify-content:space-between;"><span>Total Steps</span><strong style="color:#1a1a2e;">7</strong></div>
+                  <div style="display:flex;justify-content:space-between;"><span>Channels</span><strong style="color:#1a1a2e;">WA + Email</strong></div>
+                  <div style="display:flex;justify-content:space-between;"><span>Est. Duration</span><strong style="color:#1a1a2e;">14 days</strong></div>
+                  <div style="display:flex;justify-content:space-between;"><span>Target Leads</span><strong style="color:#1a1a2e;">1,240</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: WHATSAPP INBOX -->
+      <div class="screen-wrapper" id="screen-3">
+        <div class="screen-label">// Screen 4 — WhatsApp Inbox + AI Chat</div>
+        <div class="screen-frame s4" style="background:var(--w-bg);padding:20px;">
+          <div class="wf-topnav" style="margin:-20px -20px 20px;"><div class="wf-logo-box">🤖</div><div class="wf-logo-text">LeadGenAI</div><div class="wf-nav-spacer"></div><div class="wf-nav-items"><div class="wf-nav-item">Dashboard</div><div class="wf-nav-item">Campaigns</div><div class="wf-nav-item">Leads</div><div class="wf-nav-item active">WhatsApp</div></div><div style="width:24px"></div><div class="wf-avatar">AK</div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div><div class="wf-page-title">WhatsApp Inbox</div><div class="wf-page-sub">48 unread · AI handling 35 chats automatically</div></div>
+            <div style="display:flex;gap:8px;">
+              <div class="wf-filter-btn">🤖 AI Mode: ON</div>
+              <div class="wf-btn-primary">+ New Broadcast</div>
+            </div>
+          </div>
+          <div class="wf-wa-layout">
+            <!-- Chat List -->
+            <div class="wf-chat-list">
+              <div class="wf-chat-search">
+                <div class="wf-search-input">🔍 &nbsp;Search chats...</div>
+              </div>
+              <div style="display:flex;gap:0;border-bottom:1px solid var(--w-border);">
+                <div style="flex:1;text-align:center;padding:8px;font-size:11px;font-weight:600;border-bottom:2px solid #25d366;color:#075e54;">All (48)</div>
+                <div style="flex:1;text-align:center;padding:8px;font-size:11px;color:#666;">Hot 🔥 (12)</div>
+                <div style="flex:1;text-align:center;padding:8px;font-size:11px;color:#666;">AI (35)</div>
+              </div>
+              <div class="wf-chat-item active">
+                <div class="wf-chat-avatar" style="background:#2563eb">RS</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Rahul Sharma</div>
+                  <div class="wf-chat-preview">Yes I'm interested, can we...</div>
+                </div>
+                <div class="wf-chat-meta">
+                  <div class="wf-chat-time">2m</div>
+                  <div class="wf-chat-badge">3</div>
+                </div>
+              </div>
+              <div class="wf-chat-item">
+                <div class="wf-chat-avatar" style="background:#8b5cf6">PG</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Priya Gupta</div>
+                  <div class="wf-chat-preview">🤖 AI: Sure! Here's our pricing...</div>
+                </div>
+                <div class="wf-chat-meta">
+                  <div class="wf-chat-time">15m</div>
+                  <div class="wf-chat-badge">1</div>
+                </div>
+              </div>
+              <div class="wf-chat-item">
+                <div class="wf-chat-avatar" style="background:#ef4444">VB</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Vikram Bajaj</div>
+                  <div class="wf-chat-preview">When can we schedule a call?</div>
+                </div>
+                <div class="wf-chat-meta">
+                  <div class="wf-chat-time">1h</div>
+                  <div class="wf-chat-badge">2</div>
+                </div>
+              </div>
+              <div class="wf-chat-item">
+                <div class="wf-chat-avatar" style="background:#10b981">AM</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Amir Malik</div>
+                  <div class="wf-chat-preview">🤖 AI: Thanks for reaching out...</div>
+                </div>
+                <div class="wf-chat-meta"><div class="wf-chat-time">3h</div></div>
+              </div>
+              <div class="wf-chat-item">
+                <div class="wf-chat-avatar" style="background:#f59e0b">NK</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Neha Kulkarni</div>
+                  <div class="wf-chat-preview">Send me the brochure please</div>
+                </div>
+                <div class="wf-chat-meta">
+                  <div class="wf-chat-time">4h</div>
+                  <div class="wf-chat-badge">1</div>
+                </div>
+              </div>
+              <div class="wf-chat-item">
+                <div class="wf-chat-avatar" style="background:#6366f1">DS</div>
+                <div class="wf-chat-info">
+                  <div class="wf-chat-name">Deepak Singh</div>
+                  <div class="wf-chat-preview">Not interested, please stop</div>
+                </div>
+                <div class="wf-chat-meta"><div class="wf-chat-time">5h</div></div>
+              </div>
+            </div>
+
+            <!-- Chat Window -->
+            <div class="wf-chat-window">
+              <div class="wf-chat-header">
+                <div class="wf-chat-avatar" style="background:#2563eb;width:36px;height:36px;font-size:13px;">RS</div>
+                <div>
+                  <div class="wf-chat-header-name">Rahul Sharma · TechStart Pvt Ltd</div>
+                  <div class="wf-chat-header-sub">🤖 AI Agent Active · Score: 92 🔥</div>
+                </div>
+                <div style="margin-left:auto;display:flex;gap:8px;">
+                  <div style="color:#9de3d9;font-size:12px;cursor:pointer;">👤 Take Over</div>
+                  <div style="color:#9de3d9;font-size:12px;cursor:pointer;">📅 Book Call</div>
+                </div>
+              </div>
+              <div class="wf-messages">
+                <div class="wf-ai-indicator"><div class="ai-dot"></div> AI sent · Day 0</div>
+                <div class="wf-msg wf-msg-out">
+                  Hi Rahul! 👋 I noticed you're leading TechStart and recently posted about scaling customer acquisition challenges — completely resonates! We help SaaS founders like you automate lead gen using AI on WhatsApp + Email. Worth a quick 10-min chat? 🚀
+                  <div class="wf-msg-time">10:30 AM ✓✓</div>
+                </div>
+                <div class="wf-msg wf-msg-in">
+                  Interesting! We've been struggling with outbound. How does your system work exactly?
+                  <div class="wf-msg-time">10:45 AM</div>
+                </div>
+                <div class="wf-ai-indicator"><div class="ai-dot"></div> AI replied · 3.2s</div>
+                <div class="wf-msg wf-msg-out">
+                  Great question! Our AI agents automatically: 1) Find your ideal leads, 2) Write personalized messages for each, 3) Send on WhatsApp + Email, 4) Handle all replies 24/7 — so you only talk to hot leads! Clients see 85%+ open rates. Want to see a demo?
+                  <div class="wf-msg-time">10:45 AM ✓✓</div>
+                </div>
+                <div class="wf-msg wf-msg-in">
+                  Yes I'm interested, can we do a call this week? Maybe Thursday?
+                  <div class="wf-msg-time">11:02 AM</div>
+                </div>
+                <div class="wf-ai-indicator"><div class="ai-dot"></div> AI drafting response...</div>
+                <div class="wf-msg wf-msg-out" style="opacity:0.6;">
+                  Absolutely! 🎉 Thursday works perfectly. Here's my calendar link to pick a slot: [calendly.com/leadgenai/demo] — Looking forward to it!
+                  <div class="wf-msg-time" style="color:#25d366;font-size:9px;">AI Draft — Review before sending</div>
+                </div>
+              </div>
+              <div style="padding:6px 12px;background:#fffbeb;border-top:1px solid #fde68a;font-size:10px;color:#92400e;display:flex;align-items:center;gap:6px;">
+                🔥 <strong>Hot Lead Alert!</strong> Rahul wants to book a call. AI drafted reply — <span style="text-decoration:underline;cursor:pointer;font-weight:600;">Review & Send</span> or <span style="text-decoration:underline;cursor:pointer;">Edit</span>
+              </div>
+              <div class="wf-chat-input-area">
+                <span style="font-size:16px;cursor:pointer;">😊</span>
+                <span style="font-size:16px;cursor:pointer;">📎</span>
+                <div class="wf-input-box">Type a message or let AI handle it...</div>
+                <span style="font-size:14px;color:#666;cursor:pointer;">🎤</span>
+                <div class="wf-send-btn">➤</div>
+              </div>
+            </div>
+
+            <!-- Lead Detail -->
+            <div class="wf-lead-detail">
+              <div class="wf-lead-detail-header">
+                <div class="wf-ld-avatar" style="background:#2563eb">RS</div>
+                <div class="wf-ld-name">Rahul Sharma</div>
+                <div class="wf-ld-title">CEO · TechStart Pvt Ltd</div>
+                <div class="wf-score-circle">
+                  <div class="wf-score-inner">92</div>
+                </div>
+                <div style="font-size:10px;font-weight:600;color:#10b981;">🔥 HOT LEAD</div>
+              </div>
+              <div class="wf-info-grid">
+                <div class="wf-info-row"><span class="wf-info-key">📱 Phone</span><span class="wf-info-val">+91-98765-XXXX</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">📧 Email</span><span class="wf-info-val">rahul@techstart.in</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">🏢 Company</span><span class="wf-info-val">TechStart Pvt Ltd</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">👤 Role</span><span class="wf-info-val">CEO / Founder</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">📍 Location</span><span class="wf-info-val">Bangalore, IN</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">📊 Source</span><span class="wf-info-val">LinkedIn</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">📅 Added</span><span class="wf-info-val">Feb 22, 2026</span></div>
+                <div class="wf-info-row"><span class="wf-info-key">💬 Stage</span><span class="wf-info-val" style="color:#10b981;">Booking Call</span></div>
+              </div>
+              <div class="wf-quick-actions">
+                <div class="wf-qa-title">Quick Actions</div>
+                <div class="wf-qa-btn">📅 Book Demo Call</div>
+                <div class="wf-qa-btn">📧 Send Email Follow-up</div>
+                <div class="wf-qa-btn">🏷️ Add to Campaign</div>
+                <div class="wf-qa-btn">📝 Add Note</div>
+                <div class="wf-qa-btn" style="color:#ef4444;">🚫 Mark Unsubscribed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 5: ANALYTICS -->
+      <div class="screen-wrapper" id="screen-4">
+        <div class="screen-label">// Screen 5 — Analytics Dashboard</div>
+        <div class="screen-frame s5" style="background:var(--w-bg);padding:20px;">
+          <div class="wf-topnav" style="margin:-20px -20px 20px;"><div class="wf-logo-box">🤖</div><div class="wf-logo-text">LeadGenAI</div><div class="wf-nav-spacer"></div><div class="wf-nav-items"><div class="wf-nav-item">Dashboard</div><div class="wf-nav-item">Campaigns</div><div class="wf-nav-item">Leads</div><div class="wf-nav-item active">Analytics</div></div><div style="width:24px"></div><div class="wf-avatar">AK</div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div><div class="wf-page-title">Analytics & Insights</div><div class="wf-page-sub">Performance report · Feb 1–22, 2026</div></div>
+            <div style="display:flex;gap:8px;">
+              <div class="wf-filter-btn">📅 Feb 2026</div>
+              <div class="wf-filter-btn">All Campaigns</div>
+              <div class="wf-btn-primary">⬇️ Export Report</div>
+            </div>
+          </div>
+          <div class="wf-analytics-grid">
+            <div class="wf-stat" style="background:white;border:1px solid var(--w-border);border-radius:10px;padding:16px;">
+              <div class="wf-stat-val" style="color:#2563eb;font-size:28px;">142,800</div>
+              <div class="wf-stat-label">Total Messages Sent</div>
+              <div class="wf-stat-change">↑ +23% vs Jan</div>
+            </div>
+            <div class="wf-stat" style="background:white;border:1px solid var(--w-border);border-radius:10px;padding:16px;">
+              <div class="wf-stat-val" style="color:#25d366;font-size:28px;">84.2%</div>
+              <div class="wf-stat-label">WA Open Rate</div>
+              <div class="wf-stat-change">↑ Best ever month</div>
+            </div>
+            <div class="wf-stat" style="background:white;border:1px solid var(--w-border);border-radius:10px;padding:16px;">
+              <div class="wf-stat-val" style="color:#10b981;font-size:28px;">6,840</div>
+              <div class="wf-stat-label">Total Replies</div>
+              <div class="wf-stat-change">↑ 4.8% reply rate</div>
+            </div>
+            <div class="wf-stat" style="background:white;border:1px solid var(--w-border);border-radius:10px;padding:16px;">
+              <div class="wf-stat-val" style="color:#f59e0b;font-size:28px;">324</div>
+              <div class="wf-stat-label">Demos Booked</div>
+              <div class="wf-stat-change">↑ +18% this month</div>
+            </div>
+          </div>
+          <div class="wf-analytics-charts">
+            <div class="wf-card">
+              <div class="wf-card-title">Leads vs Replies vs Conversions (Daily)</div>
+              <div class="wf-chart" style="height:160px;align-items:flex-end;gap:3px;">
+                <!-- Simulated bars -->
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-end;height:100%;">
+                  <div style="width:100%;background:#bfdbfe;height:80%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-end;height:100%;">
+                  <div style="width:100%;background:#bfdbfe;height:60%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#2563eb;height:90%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#2563eb;height:75%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#bfdbfe;height:65%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#2563eb;height:100%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#10b981;height:45%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#10b981;height:55%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#10b981;height:40%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#f59e0b;height:20%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#f59e0b;height:28%;border-radius:2px 2px 0 0;"></div>
+                </div>
+                <div style="flex:1;justify-content:flex-end;height:100%;display:flex;flex-direction:column;">
+                  <div style="width:100%;background:#f59e0b;height:35%;border-radius:2px 2px 0 0;"></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:16px;margin-top:8px;font-size:10px;color:#666;">
+                <span><span style="display:inline-block;width:8px;height:8px;background:#2563eb;border-radius:2px;margin-right:4px;"></span>Leads Sent</span>
+                <span><span style="display:inline-block;width:8px;height:8px;background:#10b981;border-radius:2px;margin-right:4px;"></span>Replies</span>
+                <span><span style="display:inline-block;width:8px;height:8px;background:#f59e0b;border-radius:2px;margin-right:4px;"></span>Conversions</span>
+              </div>
+            </div>
+            <div class="wf-card">
+              <div class="wf-card-title">Conversion Funnel</div>
+              <div class="wf-funnel">
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Contacted</div>
+                  <div class="wf-funnel-bar" style="width:100%;background:#2563eb;">142,800</div>
+                </div>
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Opened</div>
+                  <div class="wf-funnel-bar" style="width:84%;background:#3b82f6;">120,000</div>
+                </div>
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Replied</div>
+                  <div class="wf-funnel-bar" style="width:48%;background:#10b981;">6,840</div>
+                </div>
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Interested</div>
+                  <div class="wf-funnel-bar" style="width:28%;background:#f59e0b;">1,200</div>
+                </div>
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Demo Booked</div>
+                  <div class="wf-funnel-bar" style="width:12%;background:#8b5cf6;">324</div>
+                </div>
+                <div class="wf-funnel-step">
+                  <div class="wf-funnel-label">Converted</div>
+                  <div class="wf-funnel-bar" style="width:6%;background:#ef4444;">48</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 6: AI AGENTS -->
+      <div class="screen-wrapper" id="screen-5">
+        <div class="screen-label">// Screen 6 — AI Agent Monitor</div>
+        <div class="screen-frame s6" style="background:var(--w-bg);padding:20px;">
+          <div class="wf-topnav" style="margin:-20px -20px 20px;"><div class="wf-logo-box">🤖</div><div class="wf-logo-text">LeadGenAI</div><div class="wf-nav-spacer"></div><div class="wf-nav-items"><div class="wf-nav-item active">AI Agents</div></div><div style="width:24px"></div><div class="wf-avatar">AK</div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div><div class="wf-page-title">AI Agent Control Center</div><div class="wf-page-sub">8 agents running · All systems operational · 99.9% uptime</div></div>
+            <div class="wf-filter-btn" style="background:#f0fdf4;border-color:#bbf7d0;color:#16a34a;">🟢 All Systems Go</div>
+          </div>
+          <div class="wf-agent-grid">
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">🔍</div><div class="wf-agent-name">Scout Agent</div><div class="wf-agent-stat">Scraped today: <strong>8,420</strong></div><div class="wf-agent-stat">Sources: LinkedIn, Maps</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:84%"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">⭐</div><div class="wf-agent-name">Qualifier Agent</div><div class="wf-agent-stat">Scored today: <strong>7,200</strong></div><div class="wf-agent-stat">Avg score: 67/100</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:72%"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot idle"></div><div class="wf-agent-emoji">✍️</div><div class="wf-agent-name">Copywriter Agent</div><div class="wf-agent-stat">Messages written: <strong>5,600</strong></div><div class="wf-agent-stat">A/B variants: 3 active</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:56%;background:#f59e0b;"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">⏰</div><div class="wf-agent-name">Scheduler Agent</div><div class="wf-agent-stat">Queued: <strong>12,400</strong></div><div class="wf-agent-stat">Next send: 2:30 PM</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:90%"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">💬</div><div class="wf-agent-name">Conversation Agent</div><div class="wf-agent-stat">Active chats: <strong>35</strong></div><div class="wf-agent-stat">Avg reply: 3.2s</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:35%"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">📊</div><div class="wf-agent-name">Analytics Agent</div><div class="wf-agent-stat">Reports run: <strong>24</strong></div><div class="wf-agent-stat">Optimizations: 8</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:60%"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">🛡️</div><div class="wf-agent-name">Compliance Agent</div><div class="wf-agent-stat">Opt-outs handled: <strong>12</strong></div><div class="wf-agent-stat">Violations: 0 ✅</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:100%;background:#10b981;"></div></div></div>
+            <div class="wf-agent-card"><div class="wf-agent-status-dot"></div><div class="wf-agent-emoji">🎯</div><div class="wf-agent-name">Orchestrator Agent</div><div class="wf-agent-stat">Tasks coordinated: <strong>142K</strong></div><div class="wf-agent-stat">Uptime: 99.9%</div><div class="wf-agent-progress"><div class="wf-agent-fill" style="width:99%"></div></div></div>
+          </div>
+          <!-- Live log -->
+          <div class="wf-card" style="margin-bottom:0;">
+            <div class="wf-card-title">Live Agent Logs <span class="wf-card-badge">Real-time</span></div>
+            <div class="wf-log-panel">
+              <div class="log-line"><span class="log-time">14:32:01</span><span class="log-agent">[SCOUT]</span><span class="log-success">✓ Scraped 142 leads from Google Maps "restaurants Delhi"</span></div>
+              <div class="log-line"><span class="log-time">14:32:03</span><span class="log-agent">[QUALIFIER]</span><span class="log-msg">Processing 142 new leads → scoring via GPT-4o...</span></div>
+              <div class="log-line"><span class="log-time">14:32:08</span><span class="log-agent">[QUALIFIER]</span><span class="log-success">✓ 89 leads scored ≥50 → added to campaign queue</span></div>
+              <div class="log-line"><span class="log-time">14:32:09</span><span class="log-agent">[COPYWRITER]</span><span class="log-msg">Generating personalized WA messages for 89 leads...</span></div>
+              <div class="log-line"><span class="log-time">14:32:14</span><span class="log-agent">[COPYWRITER]</span><span class="log-success">✓ 89 unique messages generated (avg 3.2s/message)</span></div>
+              <div class="log-line"><span class="log-time">14:32:15</span><span class="log-agent">[SCHEDULER]</span><span class="log-msg">Optimizing send times for 89 leads (IST timezone)</span></div>
+              <div class="log-line"><span class="log-time">14:32:16</span><span class="log-agent">[SCHEDULER]</span><span class="log-success">✓ Scheduled: 34 now, 55 at 6:00 PM (peak time)</span></div>
+              <div class="log-line"><span class="log-time">14:32:17</span><span class="log-agent">[CONV_AGENT]</span><span class="log-success">✓ Rahul Sharma replied → booking call intent detected → alert sent</span></div>
+              <div class="log-line"><span class="log-time">14:32:19</span><span class="log-agent">[ORCHESTRATOR]</span><span class="log-warn">⚠ Vikram Bajaj: 3rd follow-up — escalating to human review</span></div>
+              <div class="log-line"><span class="log-time">14:32:21</span><span class="log-agent">[COMPLIANCE]</span><span class="log-success">✓ Opt-out processed for +91-XXXXX-12345 — removed from all lists</span></div>
+              <div class="log-line"><span class="log-time">14:32:22</span><span class="log-agent">[ANALYTICS]</span><span class="log-msg">Campaign "SaaS Q1" open rate dipped 3% → A/B testing new subject line</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /canvas -->
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <div class="prop-group">
+        <div class="prop-label">Design Tokens</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
+          <div style="width:28px;height:28px;border-radius:6px;background:#2563eb;border:1px solid #3a3a5e;" title="Primary Blue"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#10b981;border:1px solid #3a3a5e;" title="Green"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#25d366;border:1px solid #3a3a5e;" title="WhatsApp"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#f59e0b;border:1px solid #3a3a5e;" title="Amber"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#8b5cf6;border:1px solid #3a3a5e;" title="Purple"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#ef4444;border:1px solid #3a3a5e;" title="Red"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#f5f5f0;border:1px solid #3a3a5e;" title="BG"></div>
+          <div style="width:28px;height:28px;border-radius:6px;background:#1e293b;border:1px solid #3a3a5e;" title="Sidebar"></div>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-label">Typography</div>
+        <div class="prop-input" style="margin-bottom:6px;">Inter — Body Text</div>
+        <div class="prop-input" style="margin-bottom:6px;">Inter Bold — Headings</div>
+        <div class="prop-input">Space Mono — Code/Logs</div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-label">Spacing</div>
+        <div class="prop-row">
+          <div class="prop-input">X: 20px</div>
+          <div class="prop-input">Y: 24px</div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-input">W: 1100px</div>
+          <div class="prop-input">R: 10px</div>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-label">Screens</div>
+        <div style="font-size:10px;color:#6666aa;display:flex;flex-direction:column;gap:4px;">
+          <div style="display:flex;justify-content:space-between;"><span>Dashboard</span><span>1100×700</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Leads CRM</span><span>1100×700</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Campaign</span><span>1100×600</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>WA Inbox</span><span>1100×640</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>Analytics</span><span>1100×640</span></div>
+          <div style="display:flex;justify-content:space-between;"><span>AI Agents</span><span>1100×640</span></div>
+        </div>
+      </div>
+      <div class="prop-group">
+        <div class="prop-label">Components</div>
+        <div style="font-size:10px;color:#6666aa;display:flex;flex-direction:column;gap:3px;">
+          <div>✓ Top Navigation Bar</div>
+          <div>✓ Dark Sidebar</div>
+          <div>✓ Stat Cards (5 variants)</div>
+          <div>✓ Data Tables</div>
+          <div>✓ Chat Bubbles (AI/Human)</div>
+          <div>✓ Flow Nodes (5 types)</div>
+          <div>✓ Status Pills</div>
+          <div>✓ Bar/Donut Charts</div>
+          <div>✓ Funnel Chart</div>
+          <div>✓ Agent Cards</div>
+          <div>✓ Live Log Panel</div>
+          <div>✓ Properties Panel</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-layout -->
+</div><!-- /figma-shell -->
+
+<script>
+const screens = document.querySelectorAll('.canvas > .screen-wrapper');
+const tabs = document.querySelectorAll('.page-tab');
+const layers = document.querySelectorAll('.left-panel .layer-item');
+
+function showScreen(index, clickedTab) {
+  screens.forEach((s, i) => {
+    s.style.display = i === index ? 'flex' : 'none';
+  });
+  tabs.forEach((t, i) => {
+    t.classList.toggle('active', i === index);
+  });
+  // sync left panel layers
+  const allLayers = document.querySelectorAll('.left-panel .panel-section:first-child .layer-item');
+  allLayers.forEach((l, i) => {
+    l.classList.toggle('active', i === index);
+  });
+}
+
+// Init: show only screen 0
+screens.forEach((s, i) => {
+  s.style.display = i === 0 ? 'flex' : 'none';
+});
+
+// Left panel layer clicks sync
+document.querySelectorAll('.left-panel .panel-section:first-child .layer-item').forEach((item, i) => {
+  item.onclick = () => showScreen(i, null);
+});
+</script>
+
+</body>
+</html>
