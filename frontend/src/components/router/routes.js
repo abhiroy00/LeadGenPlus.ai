@@ -8,4 +8,5 @@ export const ROUTES = {
   ANALYTICS: "/analytics",
   AGENTS: "/agents",
   BILLING: "/billing",
+  ONBOARDING: "/onboarding",
 };

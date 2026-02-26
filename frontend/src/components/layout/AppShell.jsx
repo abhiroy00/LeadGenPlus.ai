@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { LayoutDashboard, Users, Megaphone, MessageCircle, ChartBar as BarChart2, Bot, Search, Bell, CreditCard } from "lucide-react";
+import { LayoutDashboard, Users, Megaphone, MessageCircle, ChartBar as BarChart2, Bot, Search, Bell, CreditCard, Sparkles } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import Dropdown from "../ui/Dropdown";
 import React from "react";
@@ -12,6 +12,7 @@ const navItems = [
   { to: "/analytics", icon: <BarChart2 size={18} />, label: "Analytics" },
   { to: "/agents", icon: <Bot size={18} />, label: "AI Agents" },
   { to: "/billing", icon: <CreditCard size={18} />, label: "Billing" },
+  { to: "/onboarding", icon: <Sparkles size={18} />, label: "Onboarding" },
 ];
 
 export default function AppShell() {

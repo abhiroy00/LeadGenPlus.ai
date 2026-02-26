@@ -11,6 +11,7 @@ import ProfilePage from "../pages/ProfilePage";
 import BillingPage from "../pages/BillingPage";
 import AppShell from "../layout/AppShell";
 import ProtectedRoute from "./ProtectedRoute";
+import OnboardingPage from "../pages/OnboardingPage";
 import React from "react";
 
 export const router = createBrowserRouter([
@@ -32,6 +33,7 @@ export const router = createBrowserRouter([
       { path: "agents", element: <AgentsPage /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "billing", element: <BillingPage /> },
+      { path: "onboarding", element: <OnboardingPage /> },
     ],
   },
 ]);
