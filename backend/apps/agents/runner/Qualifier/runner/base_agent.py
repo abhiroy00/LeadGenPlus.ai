@@ -30,16 +30,15 @@ class BaseAgent:
         self.run.cost_usd = self.total_cost
         self.run.completed_at = timezone.now()
         self.run.save()
-```
 
----
+print('-'*60)
 
 ## Step 4: Qualifier Agent (`runner/qualifier_agent.py`)
 
-This is the core. The workflow:
-```
-Lead Data → [Step 1] Rule-based Pre-filter (no LLM, free)
-          → [Step 2] LLM Scoring (cheap model: gpt-4o-mini)
-          → [Step 3] Weight Aggregation → Final Score
-          → [Step 4] Confidence Check → Escalate to GPT-4o if needed
-          → Result: {score, tier, reasons, next_action}
+# This is the core. The workflow:
+# ```
+# Lead Data → [Step 1] Rule-based Pre-filter (no LLM, free)
+#           → [Step 2] LLM Scoring (cheap model: gpt-4o-mini)
+#           → [Step 3] Weight Aggregation → Final Score
+#           → [Step 4] Confidence Check → Escalate to GPT-4o if needed
+#           → Result: {score, tier, reasons, next_action}
