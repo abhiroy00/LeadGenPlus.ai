@@ -43,13 +43,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     # ── Third party ───────────────────────────────────────────
     'rest_framework',                            # DRF
     'rest_framework_simplejwt',                  # JWT auth
     'rest_framework_simplejwt.token_blacklist',  # Logout/blacklist
     'corsheaders',                               # CORS for React
     'channels',                                  # WebSocket
-    'django_celery_beat',                        # Scheduled tasks
+    'django_celery_beat',  
+    'scout_agent' ,                              # Scheduled tasks
 
     # ── Your apps ─────────────────────────────────────────────
     # NOTE: 'app.users' → fixed to 'apps.users' below
