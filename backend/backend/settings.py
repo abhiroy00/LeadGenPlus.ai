@@ -10,6 +10,7 @@ from decouple import config
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse, parse_qsl
+import sentry_sdk
 
 
 load_dotenv()
@@ -410,7 +411,6 @@ RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
 SENTRY_DSN = config('SENTRY_DSN', default='')
 
 if SENTRY_DSN:
-    import sentry_sdk
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         environment='production' if not DEBUG else 'development',
