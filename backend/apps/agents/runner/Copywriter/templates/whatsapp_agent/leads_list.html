@@ -1,0 +1,91 @@
+{% extends "whatsapp_agent/base.html" %}
+{% block title %}Leads{% endblock %}
+{% block nav_leads %}active{% endblock %}
+{% block page_title %}Leads{% endblock %}
+{% block breadcrumb %}Leads / All Leads ({{ total_count }}){% endblock %}
+
+{% block content %}
+
+<!-- Filter Bar -->
+<div class="card section-gap">
+  <form method="GET" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end">
+    <div class="form-group" style="margin:0;flex:1;min-width:200px">
+      <label>Search</label>
+      <input type="text" name="q" value="{{ search }}" placeholder="Name or phone..."
+             class="form-control"/>
+    </div>
+    <div class="form-group" style="margin:0">
+      <label>Status</label>
+      <select name="status" class="form-control" style="min-width:130px">
+        <option value="all"     {% if status_filter == "all"     %}selected{% endif %}>All</option>
+        <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Pending</option>
+        <option value="success" {% if status_filter == "success" %}selected{% endif %}>Success</option>
+        <option value="failed"  {% if status_filter == "failed"  %}selected{% endif %}>Failed</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-outline">🔍 Filter</button>
+    <a href="{% url 'leads_list' %}" class="btn btn-outline">✕ Clear</a>
+    <a href="{% url 'upload_leads' %}" class="btn btn-green" style="margin-left:auto">
+      + Import JSON
+    </a>
+  </form>
+</div>
+
+<!-- Leads Table -->
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th><th>Name</th><th>Phone</th><th>Business</th>
+          <th>City</th><th>Status</th><th>Sent At</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lead in leads %}
+        <tr>
+          <td style="color:var(--muted);font-size:11px">{{ lead.id }}</td>
+          <td style="font-weight:500">{{ lead.name }}</td>
+          <td style="font-family:monospace;font-size:12px;color:var(--muted)">{{ lead.phone }}</td>
+          <td style="color:var(--muted)">{{ lead.business|default:"—" }}</td>
+          <td style="color:var(--muted)">{{ lead.city|default:"—" }}</td>
+          <td>
+            {% if lead.status == "success" %}<span class="badge badge-green">✅ Sent</span>
+            {% elif lead.status == "failed" %}
+              <span class="badge badge-red" title="{{ lead.error }}">❌ Failed</span>
+            {% elif lead.status == "pending" %}<span class="badge badge-orange">⏳ Pending</span>
+            {% else %}<span class="badge badge-muted">{{ lead.status }}</span>{% endif %}
+          </td>
+          <td style="font-size:12px;color:var(--muted)">
+            {{ lead.sent_at|date:"M d, H:i"|default:"—" }}
+          </td>
+          <td>
+            <div class="flex-row">
+              {% if lead.status != "pending" %}
+              <form method="POST" action="{% url 'reset_lead' lead.id %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline btn-sm"
+                        onclick="return confirm('Reset {{ lead.name }} to pending?')">↩ Reset</button>
+              </form>
+              {% endif %}
+              <form method="POST" action="{% url 'delete_lead' lead.id %}" style="display:inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm"
+                        onclick="return confirm('Delete {{ lead.name }}?')">🗑</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="8" style="text-align:center;padding:32px;color:var(--muted)">
+            No leads found.
+            <a href="{% url 'upload_leads' %}" style="color:var(--green)">Import JSON →</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

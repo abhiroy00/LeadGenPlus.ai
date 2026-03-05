@@ -1,0 +1,81 @@
+{% extends "whatsapp_agent/base.html" %}
+{% block title %}Run Campaign{% endblock %}
+{% block nav_run %}active{% endblock %}
+{% block page_title %}Run Campaign{% endblock %}
+{% block breadcrumb %}Campaign / Run{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+
+  <div class="card">
+    <div class="card-title">Campaign Settings</div>
+
+    <div class="stat-card orange section-gap" style="border-radius:8px">
+      <div class="stat-val">{{ pending_count }}</div>
+      <div class="stat-label">Pending leads ready to send</div>
+    </div>
+
+    {% if pending_count == 0 %}
+    <div class="alert alert-error">
+      No pending leads. <a href="{% url 'upload_leads' %}" style="color:var(--green)">Import JSON first →</a>
+    </div>
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>Daily Limit</label>
+        <input type="number" name="daily_limit" value="500" min="1" max="10000"
+               class="form-control"/>
+        <div class="text-muted mt-4">Max messages to send in this run. Start low (200–500) and scale up weekly.</div>
+      </div>
+      <div class="form-group">
+        <label>Delay Between Messages (seconds)</label>
+        <input type="number" name="delay" value="3" min="1" max="60"
+               class="form-control"/>
+        <div class="text-muted mt-4">Minimum 2–3 seconds recommended to avoid spam flags.</div>
+      </div>
+      <button type="submit" class="btn btn-green" style="width:100%"
+              {% if pending_count == 0 %}disabled{% endif %}>
+        🚀 Start Campaign
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <div class="card section-gap">
+      <div class="card-title">How It Works</div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        {% for step in "12345"|make_list %}
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:28px;height:28px;border-radius:50%;background:var(--green);
+                      color:#000;font-weight:800;display:flex;align-items:center;
+                      justify-content:center;font-size:13px;flex-shrink:0">{{ step }}</div>
+          <div style="font-size:13px;color:var(--white);padding-top:4px">
+            {% if step == "1" %}Reads pending leads from the database{% endif %}
+            {% if step == "2" %}Claude AI writes a personalized message for each lead{% endif %}
+            {% if step == "3" %}Sends via Meta Official WhatsApp API{% endif %}
+            {% if step == "4" %}Updates lead status (success / failed) in real-time{% endif %}
+            {% if step == "5" %}Saves full run log to Campaign History{% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⚠️ Warm-Up Schedule</div>
+      <table>
+        <thead><tr><th>Week</th><th>Recommended Limit</th></tr></thead>
+        <tbody>
+          <tr><td>Week 1</td><td style="color:var(--warning)">200–500 / day</td></tr>
+          <tr><td>Week 2</td><td style="color:var(--warning)">1,000 / day</td></tr>
+          <tr><td>Week 3</td><td style="color:var(--green)">5,000 / day</td></tr>
+          <tr><td>Week 4+</td><td style="color:var(--green)">10,000 / day</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
