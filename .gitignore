@@ -80,7 +80,9 @@ Desktop.ini
 
 # dotenv #
 .env
-.env.*
+.env.local
+.env.dev
+.env.prod
 
 # mypy #
 .mypy_cache/
