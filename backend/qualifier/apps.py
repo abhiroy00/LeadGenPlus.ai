@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AgentsConfig(AppConfig):
+class QualifierConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'apps.agents'
+    name = 'qualifier'

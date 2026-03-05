@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'corsheaders',                               # CORS for React
     'channels',                                  # WebSocket
     'django_celery_beat',  
-    'scout_agent' ,                              # Scheduled tasks
+                              
 
     # ── Your apps ─────────────────────────────────────────────
     # NOTE: 'app.users' → fixed to 'apps.users' below
@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'apps.leads.apps.LeadsConfig',
     'apps.inbox.apps.InboxConfig',
     'apps.analytics.apps.AnalyticsConfig',
-    'apps.agents.apps.AgentsConfig',
+    'qualifier'
+  
 ]
 
 
