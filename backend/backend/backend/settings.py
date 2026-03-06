@@ -61,8 +61,8 @@ INSTALLED_APPS = [
     'apps.leads.apps.LeadsConfig',
     'apps.inbox.apps.InboxConfig',
     'apps.analytics.apps.AnalyticsConfig',
-    'apps.agents.apps.AgentsConfig',
-    'scout'
+    'qualifier'
+  
 ]
 
 
@@ -455,8 +455,3 @@ LOGGING = {
         'apps.users':         {'handlers': ['console'],          'level': 'INFO'},
     },
 }
-
-APIFY_API_TOKEN = config("APIFY_API_TOKEN")
-GEMINI_API_KEY = config("GEMINI_API_KEY")
-GOOGLE_SHEETS_ID = config("GOOGLE_SHEETS_ID")
-GOOGLE_CREDENTIALS_FILE = config("GOOGLE_CREDENTIALS_FILE")

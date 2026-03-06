@@ -20,13 +20,7 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-<<<<<<< HEAD
-    path('api/scout/', include('scout.urls')), 
-    path('auth/api/',include('apps.users.urls'))
-    
-=======
     path('auth/api/',include('apps.users.urls')),
     path('api/',include('qualifier.urls'))
   
->>>>>>> 803ec8b63a9a9d53a842033792c26975d9a7e7d0
 ]
