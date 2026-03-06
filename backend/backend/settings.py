@@ -62,7 +62,9 @@ INSTALLED_APPS = [
     'apps.inbox.apps.InboxConfig',
     'apps.analytics.apps.AnalyticsConfig',
     'apps.agents.apps.AgentsConfig',
-    'scout'
+    'scout',
+    'qualifier'
+  
 ]
 
 

@@ -1,0 +1,70 @@
+name: Backend CI
+
+on:
+  push:
+    paths: ["backend/**"]
+  pull_request:
+    paths: ["backend/**"]
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB:       test_leadgenplus
+          POSTGRES_USER:     postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7
+        ports: ["6379:6379"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
+
+      - name: Flake8 lint
+        working-directory: backend
+        run: |
+          pip install flake8
+          flake8 . --max-line-length=120 \
+            --exclude=migrations,env,.env,venv
+
+      - name: Run migrations
+        working-directory: backend
+        run: python manage.py migrate
+        env:
+          DATABASE_URL:      postgresql://postgres:postgres@localhost:5432/test_leadgenplus
+          REDIS_URL:         redis://localhost:6379/0
+          DJANGO_SECRET_KEY: ci-test-secret-key
+          DEBUG:             "True"
+
+      - name: Run tests
+        working-directory: backend
+        run: |
+          pip install pytest pytest-django pytest-cov
+          pytest -v
+        env:
+          DATABASE_URL:      postgresql://postgres:postgres@localhost:5432/test_leadgenplus
+          REDIS_URL:         redis://localhost:6379/0
+          DJANGO_SECRET_KEY: ci-test-secret-key
+          OPENAI_API_KEY:    dummy-key-for-tests
+          DEBUG:             "True"

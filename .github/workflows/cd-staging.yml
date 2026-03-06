@@ -1,0 +1,55 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [staging]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/leadgenplus-backend:staging
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/leadgenplus-frontend:staging
+
+      - name: Deploy to staging server
+        uses: appleboy/ssh-action@v1
+        with:
+          host:     ${{ secrets.STAGING_SERVER_IP }}
+          username: ubuntu
+          key:      ${{ secrets.STAGING_SSH_KEY }}
+          script: |
+            cd /home/ubuntu/leadgenplus
+            docker compose -f docker-compose.staging.yml pull
+            docker compose -f docker-compose.staging.yml up -d
+            docker compose -f docker-compose.staging.yml exec -T backend \
+              python manage.py migrate --noinput
+            docker image prune -f
+            echo "✅ Staging deploy done!"
+
+      - name: Notify Slack
+        if: always()
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {"text": "${{ job.status == 'success' && '✅' || '❌' }} Staging deploy ${{ job.status }}!"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
