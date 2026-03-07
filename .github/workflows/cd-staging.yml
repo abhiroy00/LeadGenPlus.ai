@@ -1,30 +1,53 @@
-# Temporarily disabled until server is ready
-# - name: Deploy to staging server
-#   uses: appleboy/ssh-action@v1
-#   with:
-#     host: ${{ secrets.STAGING_SERVER_IP }}
-#     ...
-```
+name: Deploy to Staging
 
-**Option B — Add fake secrets so workflow doesn't crash**
-```
-In GitHub Secrets add:
-  STAGING_SERVER_IP  →  0.0.0.0  (placeholder)
-  STAGING_SSH_KEY    →  placeholder
-  PROD_SERVER_IP     →  0.0.0.0
-  PROD_SSH_KEY       →  placeholder
-  SLACK_WEBHOOK_URL  →  https://placeholder.com
-  VITE_API_URL       →  http://localhost:8000/api
-```
+on:
+  push:
+    branches: [staging]
 
----
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
-## What to do RIGHT NOW
+    steps:
+      - uses: actions/checkout@v4
 
-Tell me:
-```
-1. Have you created a Docker Hub account?
-   Yes / No
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-2. Do you have an EC2 server running?
-   Yes / No
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/leadgenplus-backend:staging
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/leadgenplus-frontend:staging
+
+      # ── Deploy (DISABLED until staging server ready) ───
+      # - name: Deploy to staging server
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host:     ${{ secrets.STAGING_SERVER_IP }}
+      #     username: ubuntu
+      #     key:      ${{ secrets.STAGING_SSH_KEY }}
+      #     script: |
+      #       cd /home/ubuntu/leadgenplus
+      #       docker compose -f docker-compose.staging.yml pull
+      #       docker compose -f docker-compose.staging.yml up -d
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "======================================"
+          echo "Build Status: ${{ job.status }}"
+          echo "Images pushed to Docker Hub ✅"
+          echo "Deploy: PENDING (server not set up yet)"
+          echo "======================================"
