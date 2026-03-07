@@ -16,8 +16,8 @@ from .serializers import (
     RegisterSerializer,
     CustomTokenObtainSerializer,
 )
-from apps.users.serializers import LoginSerializer
-
+from apps.users.serializers import LoginSerializer, LogoutSerializer
+from drf_spectacular.utils import extend_schema
 
 class LoginView(TokenObtainPairView):
     """
@@ -50,7 +50,10 @@ class LoginView(TokenObtainPairView):
             }
         return response
 
-
+@extend_schema(
+    request=RegisterSerializer,
+    responses={201: RegisterSerializer},
+)
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -87,7 +90,9 @@ def register(request):
         }
     }, status=status.HTTP_201_CREATED)
 
-
+@extend_schema(
+    responses={200: dict}
+)
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def me(request):
@@ -157,6 +162,10 @@ def me(request):
     })
 
 
+@extend_schema(
+    request=LogoutSerializer,
+    responses={200: dict}
+)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):

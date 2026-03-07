@@ -1,82 +1,86 @@
 # backend/users/serializers.py
 
+import token
+
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers \
     import TokenObtainPairSerializer
 from django.contrib.auth.models import User
 from .models import UserProfile, Plan
 
-
-class CustomTokenObtainSerializer(
-        TokenObtainPairSerializer):
+class CustomTokenObtainSerializer(TokenObtainPairSerializer):
     """
     Embeds plan + quota + features in JWT payload.
     Frontend decodes this — no extra /me API call needed.
     """
 
+    email = serializers.EmailField()
+    password = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        # Allow login with email instead of username
+        attrs["username"] = attrs.get("email")
+        return super().validate(attrs)
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
 
-        try:
-            profile = user.profile
-            usage   = user.usage
-            plan    = profile.plan
-        except Exception:
-            return token
+        profile = getattr(user, "profile", None)
+        usage   = getattr(user, "usage", None)
+        plan    = getattr(profile, "plan", None) if profile else None
 
-        # User info
-        token['user_id']  = user.id
-        token['email']    = user.email
-        token['name']     = user.get_full_name() \
-                            or user.email.split('@')[0]
-        token['company']  = profile.company_name
-        token['avatar']   = profile.avatar
+        # Basic user info
+        token["user_id"] = user.id
+        token["email"]   = user.email
+        token["name"]    = user.get_full_name() or user.email.split("@")[0]
+        token["permissions"] = list(user.get_all_permissions())
+        
+        if profile:
+            token["company"] = profile.company_name
+            token["avatar"] = profile.avatar.url if profile.avatar else None
+            token["role"]    = profile.role
+            token["trial_expired"] = profile.is_trial_expired
+            token["days_left"]     = profile.days_left
+            token["expires_at"]    = str(profile.plan_expires_at)
+                    
 
-        # RBAC
-        token['role']     = profile.role
-        token['plan']     = plan.name if plan else 'trial'
+        token["plan"] = getattr(plan, "name", "trial")
 
-        # Trial status
-        token['trial_expired'] = profile.is_trial_expired
-        token['days_left']     = profile.days_left
-        token['expires_at']    = str(profile.plan_expires_at)
-
-        # ABAC quota
+        # Quotas
         if plan and usage:
-            token['quota'] = {
-                'leads':     {
-                    'used':  usage.leads_used,
-                    'limit': plan.leads_limit,
+            token["quota"] = {
+                "leads": {
+                    "used": usage.leads_used,
+                    "limit": plan.leads_limit,
                 },
-                'campaigns': {
-                    'used':  usage.campaigns_used,
-                    'limit': plan.campaigns_limit,
+                "campaigns": {
+                    "used": usage.campaigns_used,
+                    "limit": plan.campaigns_limit,
                 },
-                'messages':  {
-                    'used':  usage.messages_sent,
-                    'limit': plan.messages_limit,
+                "messages": {
+                    "used": usage.messages_sent,
+                    "limit": plan.messages_limit,
                 },
-                'agents':    {
-                    'limit': plan.agents_limit,
+                "agents": {
+                    "limit": plan.agents_limit,
                 },
             }
 
         # Feature flags
         if plan:
-            token['features'] = {
-                'flow_builder':  plan.can_flow_builder,
-                'ai_agents':     plan.can_ai_agents,
-                'api_access':    plan.can_api_access,
-                'export':        plan.can_export,
-                'team_members':  plan.can_team_members,
-                'custom_agents': plan.can_custom_agents,
-                'ads_agent':     plan.can_ads_agent,
+            token["features"] = {
+                "flow_builder": plan.can_flow_builder,
+                "ai_agents": plan.can_ai_agents,
+                "api_access": plan.can_api_access,
+                "export": plan.can_export,
+                "team_members": plan.can_team_members,
+                "custom_agents": plan.can_custom_agents,
+                "ads_agent": plan.can_ads_agent,
             }
 
         return token
-
-
+    
 class RegisterSerializer(serializers.Serializer):
     first_name       = serializers.CharField(max_length=50)
     last_name        = serializers.CharField(max_length=50)
@@ -88,7 +92,9 @@ class RegisterSerializer(serializers.Serializer):
                            min_length=8,
                            write_only=True)
     confirm_password = serializers.CharField(
-                           write_only=True)
+                            write_only=True,
+                            style={"input_type": "password"}
+)
 
     def validate_email(self, value):
         if User.objects.filter(
@@ -137,3 +143,6 @@ class LoginSerializer(TokenObtainPairSerializer):
         # Move email value into username before validation
         attrs['username'] = attrs.get('email', '')
         return super().validate(attrs)
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()

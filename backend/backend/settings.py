@@ -3,13 +3,14 @@ Django settings for LeadGenPlus backend project.
 Updated with: JWT, DRF, CORS, Celery, Channels, PostgreSQL
 """
 
+from celery.schedules import crontab
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import os
 from dotenv import load_dotenv
 from urllib.parse import urlparse, parse_qsl
-
+import sentry_sdk
 
 
 load_dotenv()
@@ -52,6 +53,9 @@ INSTALLED_APPS = [
     'channels',                                  # WebSocket
     'django_celery_beat',  
                               
+    'django_celery_beat',                        # Scheduled tasks
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
 
     # ── Your apps ─────────────────────────────────────────────
     # NOTE: 'app.users' → fixed to 'apps.users' below
@@ -167,16 +171,16 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # ── Internationalisation ──────────────────────────────────────
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE     = 'Asia/Kolkata'   # IST — important for lead scheduling!
-USE_I18N      = True
-USE_TZ        = True
+TIME_ZONE = 'Asia/Kolkata'   # IST — important for lead scheduling!
+USE_I18N = True
+USE_TZ = True
 
 
 # ── Static & Media ────────────────────────────────────────────
-STATIC_URL  = 'static/'
+STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-MEDIA_URL   = '/media/'
-MEDIA_ROOT  = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -221,6 +225,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
+    # Drf (swagger)
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
     # JSON only responses
     'DEFAULT_RENDERER_CLASSES': [
@@ -293,13 +300,13 @@ REDIS_URL = config('REDIS_URL', default='redis://localhost:6379/0')
 # Start worker:  celery -A backend worker --loglevel=info
 # Start beat:    celery -A backend beat --loglevel=info
 # ════════════════════════════════════════════════════════════
-CELERY_BROKER_URL        = REDIS_URL
-CELERY_RESULT_BACKEND    = REDIS_URL
-CELERY_ACCEPT_CONTENT    = ['json']
-CELERY_TASK_SERIALIZER   = 'json'
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE          = 'Asia/Kolkata'
-CELERY_TASK_ACKS_LATE             = True
+CELERY_TIMEZONE = 'Asia/Kolkata'
+CELERY_TASK_ACKS_LATE = True
 CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 
 # Route heavy tasks to separate queues
@@ -316,7 +323,6 @@ CELERY_TASK_ROUTES = {
 }
 
 # Scheduled tasks (Celery Beat)
-from celery.schedules import crontab
 
 CELERY_BEAT_SCHEDULE = {
     # Check which trials expire in 2 days — send reminder email
@@ -366,12 +372,12 @@ EMAIL_BACKEND = config(
     'EMAIL_BACKEND',
     default='django.core.mail.backends.console.EmailBackend'
 )
-EMAIL_HOST          = config('EMAIL_HOST',          default='smtp.gmail.com')
-EMAIL_PORT          = config('EMAIL_PORT',          default=587, cast=int)
-EMAIL_USE_TLS       = config('EMAIL_USE_TLS',       default=True, cast=bool)
-EMAIL_HOST_USER     = config('EMAIL_HOST_USER',     default='')
+EMAIL_HOST = config('EMAIL_HOST',          default='smtp.gmail.com')
+EMAIL_PORT = config('EMAIL_PORT',          default=587, cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS',       default=True, cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER',     default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-DEFAULT_FROM_EMAIL  = config(
+DEFAULT_FROM_EMAIL = config(
     'DEFAULT_FROM_EMAIL',
     default='LeadGenPlus.ai <noreply@leadgenplus.ai>'
 )
@@ -381,25 +387,26 @@ DEFAULT_FROM_EMAIL  = config(
 # OpenAI  —  GPT-4o for all 8 AI agents
 # pip install openai
 # ════════════════════════════════════════════════════════════
-OPENAI_API_KEY    = config('OPENAI_API_KEY',    default='')
-OPENAI_MODEL      = config('OPENAI_MODEL',      default='gpt-4o')
+OPENAI_API_KEY = config('OPENAI_API_KEY',    default='')
+OPENAI_MODEL = config('OPENAI_MODEL',      default='gpt-4o')
 OPENAI_MAX_TOKENS = config('OPENAI_MAX_TOKENS', default=1000, cast=int)
 
 
 # ════════════════════════════════════════════════════════════
 # WhatsApp Business API
 # ════════════════════════════════════════════════════════════
-WHATSAPP_PROVIDER     = config('WHATSAPP_PROVIDER',     default='360dialog')
-WHATSAPP_API_KEY      = config('WHATSAPP_API_KEY',      default='')
-WHATSAPP_PHONE_ID     = config('WHATSAPP_PHONE_ID',     default='')
-WHATSAPP_VERIFY_TOKEN = config('WHATSAPP_VERIFY_TOKEN', default='leadgenplus_verify')
+WHATSAPP_PROVIDER = config('WHATSAPP_PROVIDER',     default='360dialog')
+WHATSAPP_API_KEY = config('WHATSAPP_API_KEY',      default='')
+WHATSAPP_PHONE_ID = config('WHATSAPP_PHONE_ID',     default='')
+WHATSAPP_VERIFY_TOKEN = config(
+    'WHATSAPP_VERIFY_TOKEN', default='leadgenplus_verify')
 
 
 # ════════════════════════════════════════════════════════════
 # Razorpay  —  plan upgrade payments
 # pip install razorpay
 # ════════════════════════════════════════════════════════════
-RAZORPAY_KEY_ID     = config('RAZORPAY_KEY_ID',     default='')
+RAZORPAY_KEY_ID = config('RAZORPAY_KEY_ID',     default='')
 RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
 
 
@@ -410,19 +417,17 @@ RAZORPAY_KEY_SECRET = config('RAZORPAY_KEY_SECRET', default='')
 SENTRY_DSN = config('SENTRY_DSN', default='')
 
 if SENTRY_DSN:
-    import sentry_sdk
     sentry_sdk.init(
-        dsn               = SENTRY_DSN,
-        environment       = 'production' if not DEBUG else 'development',
-        traces_sample_rate = 0.1,
-        send_default_pii  = False,
+        dsn=SENTRY_DSN,
+        environment='production' if not DEBUG else 'development',
+        traces_sample_rate=0.1,
+        send_default_pii=False,
     )
 
 
 # ════════════════════════════════════════════════════════════
 # Logging  —  helps debug agents + webhook issues
 # ════════════════════════════════════════════════════════════
-import os
 os.makedirs(BASE_DIR / 'logs', exist_ok=True)
 
 LOGGING = {
@@ -462,3 +467,29 @@ APIFY_API_TOKEN = config("APIFY_API_TOKEN")
 GEMINI_API_KEY = config("GEMINI_API_KEY")
 GOOGLE_SHEETS_ID = config("GOOGLE_SHEETS_ID")
 GOOGLE_CREDENTIALS_FILE = config("GOOGLE_CREDENTIALS_FILE")
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'LeadGenPlus API',
+    'DESCRIPTION': 'LeadGenPlus Backend API Documentation',
+    'VERSION': '1.0.0',
+
+    'SERVE_INCLUDE_SCHEMA': False,
+
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+
+    # JWT Auth Support
+    'SECURITY': [
+        {'BearerAuth': []},
+    ],
+
+    'COMPONENTS': {
+        'securitySchemes': {
+            'BearerAuth': {
+                'type': 'http',
+                'scheme': 'bearer',
+                'bearerFormat': 'JWT'
+            }
+        }
+    }
+}
