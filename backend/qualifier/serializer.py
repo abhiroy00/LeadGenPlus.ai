@@ -1,8 +1,9 @@
 from rest_framework import serializers
-from .models import Product
+from .models import QualifiedLead
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class QualifiedLeadSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Product
+        model = QualifiedLead
         fields = "__all__"
