@@ -50,9 +50,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',                  # JWT auth
     'rest_framework_simplejwt.token_blacklist',  # Logout/blacklist
     'corsheaders',                               # CORS for React
-    'channels',                                  # WebSocket
-    'django_celery_beat',  
-                              
+    'channels',                                  # WebSocket    
     'django_celery_beat',                        # Scheduled tasks
     'drf_spectacular',
     'drf_spectacular_sidecar',
