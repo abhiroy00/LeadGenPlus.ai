@@ -54,7 +54,7 @@ def scrape_google_places(business_type: str, location: str, max_results: int) ->
         timeout=300,  # Apify can take a while in sync mode
     )
 
-    if response.status_code != 200:
+    if response.status_code not in [200, 201]:
         raise RuntimeError(
             f"Apify returned status {response.status_code}: {response.text[:500]}"
         )

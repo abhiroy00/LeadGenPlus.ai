@@ -85,7 +85,7 @@ def _extract_email_with_gemini(website_text: str, website_url: str) -> str:
         raise ValueError("GEMINI_API_KEY is not set in .env")
 
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    model = genai.GenerativeModel('gemini-2.0-flash')   # ← only this line changed
 
     prompt = f"""
 You are an expert email extractor. Below is text scraped from the website: {website_url}

@@ -46,6 +46,7 @@ urlpatterns = [
     path("api/health/", health_check),
     path('admin/', admin.site.urls),
     path('auth/api/',include('apps.users.urls')),
+    path("api/scout/",include('scout.urls')),
 
     # Drf (swagger)
     # OpenAPI schema

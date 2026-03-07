@@ -491,3 +491,22 @@ SPECTACULAR_SETTINGS = {
         }
     }
 }
+
+
+# ── Celery Configuration ──────────────────────────────
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata'
+
+# Store task results in Django DB (optional but useful)
+CELERY_RESULT_EXTENDED = True
+
+# Task time limits
+CELERY_TASK_SOFT_TIME_LIMIT = 600   # 10 minutes warning
+CELERY_TASK_TIME_LIMIT = 900        # 15 minutes hard stop
+
+# ── Django Celery Results ─────────────────────────────
+INSTALLED_APPS += ['django_celery_results']
